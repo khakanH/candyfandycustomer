@@ -1,0 +1,85 @@
+<?php
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\Customer;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Orders;
+use App\Models\OrderDetails;
+use App\Models\Cart;
+use App\Models\CartDetail;
+
+use File;
+use DB;
+
+class HomeController extends Controller
+{
+
+
+    public function __construct(Request $request)
+    {
+
+    }
+
+
+    public function Index(Request $request)
+    {
+        try 
+        {   
+            $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
+            $cart_id = empty(session("cart_id"))?0:session("cart_id");
+
+            $category          = Category::where('is_show',1)->get()->toArray();
+            $featured_product  = Product::where('is_featured',1)
+                                        ->where('stock','>',0)
+                                        ->where('is_show',1)
+                                        ->get();
+
+            $product_ids = OrderDetails::select('product_id', DB::raw('COUNT(id) as count'))
+                                       ->groupBy('product_id')
+                                       ->orderBy(DB::raw('COUNT(id)'), 'DESC')
+                                       ->pluck('product_id');
+
+            $best_selling_products = array();
+            foreach ($product_ids as $key) 
+              {
+                $best_selling_products[] = Product::where('id',$key)
+                                         ->where('stock','>',0)
+                                         ->where('is_show',1)
+                                         ->first();
+              }
+
+            $best_selling_products = array_filter($best_selling_products);
+
+
+            foreach ($featured_product as $key) 
+            {
+              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+            }
+
+            foreach ($best_selling_products as $key) 
+            {
+              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+            }
+
+            $featured_product = $featured_product->toArray();
+
+           
+            return view('home',compact('category','featured_product','best_selling_products'));
+        } 
+        catch (Exception $e) 
+        {
+            return response()->json($e,500);
+            
+        }
+    }
+
+
+
+
+}
+    
