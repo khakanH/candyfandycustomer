@@ -6,6 +6,18 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
+
+
+use App\Http\Controllers\Admin\AccountController as AdminAccountController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\InventoryController as AdminInventoryController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\SaleController as AdminSaleController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+
+
+use App\Models\UserRole;
+use App\Models\Modules;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,4 +62,107 @@ Route::get('add-to-cart/{id}',[CartController::class, 'AddToCart'])->name('add-t
 Route::get('change-cart-item-qty/{id}/{val}',[CartController::class, 'ChangeCartItemQty'])->name('change-cart-item-qty');
 
 
-Route::get('/product',[ProductController::class, 'Index'])->name('product');
+Route::get('product_list',[ProductController::class, 'Index'])->name('product_list');
+Route::get('product-by-filter/{id}/{val}',[ProductController::class, 'ProductByFilter'])->name('product-by-filter');
+
+
+
+
+
+
+
+
+
+
+//Admin Route
+Route::prefix('admin')->group(function () {
+
+
+	Route::get('/MB-Script',function(){
+
+	$modules = Modules::get();
+	foreach ($modules as $key) 
+	{
+		UserRole::insert(array(
+				'user_type'	=> 0,
+				'module_id'		=> $key['id'],
+		));
+	}
+});
+
+
+
+Route::get('/', function () {
+    return view('admin.signin');
+})->name('index')->middleware('AdminCheckLogin');
+
+
+Route::post('signin', [AdminAccountController::class, 'Sigin'])->name('signin');
+
+Route::get('signout', [AdminAccountController::class, 'SignOut'])->name('signout');
+
+
+
+Route::middleware(['AdminLoginSession','AdminCheckUserRole'])->group(function () 
+{	
+
+Route::get('dashboard',[AdminDashboardController::class, 'Index'])->name('dashboard');
+
+
+Route::get('category',[AdminInventoryController::class, 'CategoryList'])->name('category');
+Route::post('add-update-category',[AdminInventoryController::class, 'AddUpdateCategory'])->name('add-update-category');
+Route::get('get-category-list-AJAX',[AdminInventoryController::class, 'CategoryListAJAX'])->name('get-category-list-AJAX');
+Route::get('change-category-availability/{id}/{val}',[AdminInventoryController::class, 'ChangeCategoryAvailability'])->name('change-category-availability');
+Route::get('delete-category/{id}',[AdminInventoryController::class, 'DeleteCategory'])->name('delete-category');
+
+
+
+
+Route::get('product',[AdminInventoryController::class, 'ProductList'])->name('product');
+Route::post('add-update-product',[AdminInventoryController::class, 'AddUpdateProduct'])->name('add-update-product');
+Route::get('get-product-list-AJAX',[AdminInventoryController::class, 'ProductListAJAX'])->name('get-product-list-AJAX');
+Route::get('get-category-name-list/{id}',[AdminInventoryController::class, 'CategoryNameList'])->name('get-category-name-list');
+Route::get('change-product-availability/{id}/{val}',[AdminInventoryController::class, 'ChangeProductAvailability'])->name('change-product-availability');
+Route::get('delete-product/{id}',[AdminInventoryController::class, 'DeleteProduct'])->name('delete-product');
+
+
+
+Route::get('order',[AdminOrderController::class, 'Index'])->name('order');
+Route::get('get-new-order',[AdminOrderController::class, 'NewOrders'])->name('get-new-order');
+Route::get('accept-order/{id}',[AdminOrderController::class, 'AcceptOrder'])->name('accept-order');
+Route::get('reject-order/{id}',[AdminOrderController::class, 'RejectOrder'])->name('reject-order');
+Route::get('complete-order/{id}',[AdminOrderController::class, 'CompleteOrder'])->name('complete-order');
+
+Route::get('search-order/{val}',[AdminOrderController::class, 'SearchOrder'])->name('search-order');
+
+Route::get('get-accepted-order',[AdminOrderController::class, 'AcceptedOrderList'])->name('get-accepted-order');
+Route::get('get-completed-order',[AdminOrderController::class, 'CompletedOrderList'])->name('get-completed-order');
+Route::get('get-rejected-order',[AdminOrderController::class, 'RejectedOrderList'])->name('get-rejected-order');
+
+
+
+
+
+
+
+Route::get('sale',[AdminSaleController::class, 'Index'])->name('sale');
+
+
+Route::get('user',[AdminUserController::class, 'Index'])->name('user');
+Route::post('add-update-user',[AdminUserController::class, 'AddUpdateUser'])->name('add-update-user');
+Route::get('get-user-type-name-list/{type}',[AdminUserController::class, 'UserTypeNameList'])->name('get-user-type-name-list');
+Route::get('get-user-list-AJAX',[AdminUserController::class, 'UserListAJAX'])->name('get-user-list-AJAX');
+Route::get('delete-user/{id}',[AdminUserController::class, 'DeleteUser'])->name('delete-user');
+Route::get('block-unblock-user/{id}',[AdminUserController::class, 'BlockUnblockUser'])->name('block-unblock-user');
+Route::get('user-type',[AdminUserController::class, 'UserType'])->name('user-type');
+Route::get('delete-user-type/{id}',[AdminUserController::class, 'DeleteUserType'])->name('delete-user-type');
+Route::post('add-update-user-type',[AdminUserController::class, 'AddUpdateUserType'])->name('add-update-user-type');
+Route::get('get-user-type-list-AJAX',[AdminUserController::class, 'UserTypeListAJAX'])->name('get-user-type-list-AJAX');
+Route::get('user-roles',[AdminUserController::class, 'UserRoles'])->name('user-roles');
+Route::post('save-roles',[AdminUserController::class,'SaveRoles'])->name('save-roles');
+Route::get('get-user-roles-AJAX/{id}',[AdminUserController::class,'UserRolesAJAX'])->name('get-user-roles-AJAX');
+
+});
+
+
+});

@@ -180,6 +180,12 @@ class AccountController extends Controller
                                         "created_at"  => date("Y-m-d H:i:s"),
                                         "updated_at"  => date("Y-m-d H:i:s"),
                             ));
+
+
+            }
+            else
+            {
+                $cart_id = $cart_id->id;
             }
             $request->session()->put("login",$result);
             $request->session()->put("cart_id",$cart_id);

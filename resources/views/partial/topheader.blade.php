@@ -2,6 +2,16 @@
         <!-- 1st Topbar header -->
         <!-- ============================================================== -->
         
+        <style type="text/css">
+                    .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10000000;
+          }
+        </style>
+
+
         <header class="most-topbar">
             <span class="mtb-left"><a class="text-white" href="tel:000 0123 1234">000 0123 1234</a></span>
             <span class="mtb-right text-white">
@@ -23,7 +33,7 @@
           <!-- ============================================================== -->
         <!-- 2nd Topbar header -->
         <!-- ============================================================== -->
-        <header class="topbar">
+        <header class="topbar" id="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                    
 
@@ -41,7 +51,7 @@
                     <!-- ============================================================== -->
                      <ul class="navbar-nav float-left mr-auto">
                        <li><a class="nav-link {{Request::is('/')?'active':''}}" href="{{route('home')}}">Home</a></li>
-                       <li><a class="nav-link {{Request::is('product')?'active':''}}"  href="{{route('product')}}">Products</a></li>
+                       <li><a class="nav-link {{Request::is('product_list')?'active':''}}"  href="{{route('product_list')}}">Products</a></li>
                        <li><a class="nav-link  {{Request::is('contact-us')?'active':''}}" href="{{route('contact-us')}}">Contact Us</a></li>
                        <li><a class="nav-link {{Request::is('about-us')?'active':''}}" href="{{route('about-us')}}">About Us</a></li>
                     </ul>
@@ -54,8 +64,8 @@
                         <!-- ============================================================== -->
                         <li class="nav-item d-flex header-search">
                                 
-                                <input type="text" class="form-control" placeholder="Search" style="padding-right: 50px;">
-                                <i class="fa fa-search" style=" font-size: 24px; color: lightgray; margin: 5px 1px 1px 205px; position: absolute;"></i>
+                                <input type="text" id="product_search_text" class="form-control" placeholder="Search" style="padding-right: 50px;" value="{{isset($search)?(empty($search)?'':$search):''}}">
+                                <i class="fa fa-search" onclick="GetProductBySearch()" style="cursor: pointer; font-size: 24px; color: lightgray; margin: 5px 1px 1px 205px; position: absolute;"></i>
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
@@ -80,3 +90,33 @@
         <!-- End 2nd Topbar header -->
         <!-- ============================================================== -->
       
+      <script type="text/javascript">
+
+        window.onscroll = function() {myFunction()};
+
+          var header = document.getElementById("topbar");
+          var sticky = header.offsetTop;
+
+          function myFunction() {
+            if (window.pageYOffset > sticky) {
+              header.classList.add("sticky");
+            } else {
+              header.classList.remove("sticky");
+            }
+          }
+        function GetProductBySearch() 
+        {
+          var id  = "<?php echo isset($selected_cate_id)?$selected_cate_id:0 ?>";
+
+
+          var text = document.getElementById("product_search_text").value.trim();
+          
+          if (!text) 
+          {
+              text = "0";
+          }
+          
+         window.location.href = "{{ config('app.url')}}product-by-filter/"+id+"/"+text;
+
+        }
+      </script>

@@ -5,7 +5,7 @@
     <link href="{{asset('assets/libs/fullcalendar/dist/fullcalendar.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/extra-libs/calendar/calendar.css')}}" rel="stylesheet" />
     <!-- needed css -->
-    <link href="{{asset('dist/css/style.min.css')}}" rel="stylesheet">
+    <link href="{{asset('dist/css/style.min.css?'.time().'')}}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

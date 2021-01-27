@@ -7,7 +7,7 @@
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1280 504" preserveAspectRatio="xMinYMin meet" >
                 <image style="width: 100%; height: auto;" xlink:href="{{config('app.img_url')}}big/home-img.png">
                 </image>
-                <a xlink:href=""><rect x="580" y="365" width="120" height="40" fill="#fff" opacity="0.00"/></a>
+                <a xlink:href="{{route('product_list')}}"><rect x="580" y="365" width="120" height="40" fill="#fff" opacity="0.00"/></a>
                 </svg>
             </figure> 
             <!-- ============================================================== -->
@@ -41,7 +41,7 @@
                     <!-- product cards starts here -->
                     <!--Carousel Wrapper-->
                     <div class="row card-row">
-                        <div id="product-categories-slder-btn" class="carousel slide carousel-multi-item" data-ride="carousel">
+                        <div id="product-categories-slder-btn" class="carousel slide carousel-multi-item" data-ride="carousel" data-interval="10000">
 
     
                             <!--Slides-->
@@ -62,8 +62,8 @@
                                         ?>
                                         @foreach($cate_list as $key)
                                         <div class="col-md-3" style="float:left;">
-                                            <div class="container" style="margin-right: 35px; margin-left: 35px;">
-                                                <div style="cursor: pointer;">
+                                            <div class="" style="margin-right: 35px; margin-left: 35px;">
+                                                <div style="cursor: pointer;" onclick='GetProductByFilter("{{$key['id']}}")'>
                                                 <center><img class="rounded-circle card-img-top"
                                                 src="{{config('app.img_url')}}{{$key['icon']}}" style="width: 110px; height: 110px;" alt="Card image cap"></center>
                                                 <div class="text-center mt-2">
@@ -343,7 +343,12 @@
         $.ajax({
         type: "GET",
         url: "{{ config('app.url')}}add-to-cart/"+prod_id,
+        beforeSend: function(){
+                            $('#LoadingModal').modal('show');
+                        },
         success: function(data) {
+                            $('#LoadingModal').modal('hide');
+
             if (FP_cart_btn && FP_cart_item_qty) 
             {
                 document.getElementById("cart_btn"+prod_id).style.color = "#2cabe3";
@@ -412,7 +417,11 @@
         $.ajax({
         type: "GET",
         url: "{{ config('app.url')}}change-cart-item-qty/"+prod_id+"/"+qty,
+        beforeSend: function(){
+                            $('#LoadingModal').modal('show');
+                        },
         success: function(data) {
+                            $('#LoadingModal').modal('hide');
                 get_status = data['status'];
                 get_msg    = data['msg'];
 
@@ -439,6 +448,26 @@
             alert('Exception:' + errorThrown);
         }
     });
+    }
+
+
+
+
+
+
+
+
+
+    function GetProductByFilter(id)
+    {   
+        var text = document.getElementById("product_search_text").value.trim();
+
+        if (!text) 
+        {
+            text = "0";
+        }
+        
+        window.location.href = "{{ config('app.url')}}product-by-filter/"+id+"/"+text;
     }
 </script>
 
