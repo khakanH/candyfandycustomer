@@ -1,7 +1,11 @@
 @extends('layout.app')
 @section('content')
 
-            
+             <div class="container-fluid" style="padding: 0; margin: 0;">
+            <img class="img-responsive" src="{{config('app.img_url')}}background/product2.jpg" style="width:100%" alt="fdsf">
+        </div>
+
+
             <section class="page-container">
                 <div class="page-content container">
                     <div class="row-wrapper">

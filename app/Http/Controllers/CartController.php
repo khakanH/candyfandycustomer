@@ -24,6 +24,42 @@ class CartController extends Controller
 
     }
 
+     public function Index(Request $request)
+    {
+        try 
+        { 
+
+          $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
+          $cart_id = empty(session("cart_id"))?0:session("cart_id");
+
+
+          $cart = Cart::where('id',$cart_id)->first(); 
+          $cart_detail = CartDetail::where('cart_id',$cart_id)->get();
+
+          foreach ($cart_detail as $key) 
+          {
+            $get_prod = Product::where('id',$key['product_id'])->where('is_show',1)->where('stock','>',0)->first();
+            if ($get_prod != "") 
+            {
+              $key['product_name']  = $get_prod->name;
+              $key['product_price'] = $get_prod->sale_price;
+              $key['product_image'] = $get_prod->image;
+              $key['product_subtotal'] = $get_prod->sale_price*$key['product_quantity'];
+
+
+            }
+
+          }
+          // dump($cart_detail);
+          // exit();
+          return view('cart',compact('cart','cart_detail'));
+        } 
+        catch (Exception $e) 
+        {
+            return response()->json($e,500);
+            
+        }
+    }
 
     public function AddToCart(Request $request,$prod_id)
     {

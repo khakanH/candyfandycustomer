@@ -58,8 +58,11 @@ Route::post('login',[AccountController::class, 'Login'])->name('login');
 Route::get('logout',[AccountController::class, 'Logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'Index'])->name('home');
+
+Route::get('/cart', [CartController::class, 'Index'])->name('cart');
 Route::get('add-to-cart/{id}',[CartController::class, 'AddToCart'])->name('add-to-cart');
 Route::get('change-cart-item-qty/{id}/{val}',[CartController::class, 'ChangeCartItemQty'])->name('change-cart-item-qty');
+
 
 
 Route::get('product_list',[ProductController::class, 'Index'])->name('product_list');
