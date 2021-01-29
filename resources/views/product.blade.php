@@ -72,13 +72,15 @@
                                                   <div class="card mb-2">
                                                     <div class="row">
                                                       <div class="col-md-5">
-                                                        <center><img class="card-img-top"
+                                                        <center><img style="cursor: pointer;" onclick='GetProductDetails("{{$key['id']}}")' class="card-img-top"
                                                       src="{{config('app.img_url')}}{{$key['image']}}" alt="Card image cap" ></center>
                                                       </div>
                                                        <div class="col-md-7 product-page-slider">
                                                         <div class="card-body">
+                                                          <a href="{{route('product-detail',[$key['id']])}}">
                                                           <p class="card-text">{{$key['name']}}</p>
                                                           <h4 class="card-title"><b>{{$key['sale_price']}}/- PKR</b></h4>
+                                                          </a>
                                                           <span class="card-icons">
                                                               <a href="javascript:void(0)" onclick='AddtoCart("{{$key['id']}}")'><i id="cart_btn{{$key['id']}}" class="fas fa-shopping-cart" style="
                                                                   <?php if ($key['cart_count'] != 0): ?>
@@ -159,7 +161,7 @@
                                       <div class="carousel-inner" style="overflow: initial;" role="listbox">
                                           @if(count($best_selling_products) == 0)
 
-                                          <center><p>No fbest selling product found</p></center>
+                                          <center><p>No best selling product found</p></center>
                                           @else
                                               <!--First slide-->
                                               <?php $a=0; ?>
@@ -176,13 +178,15 @@
                                                   <div class="card mb-2">
                                                     <div class="row">
                                                       <div class="col-md-5">
-                                                        <center><img class="card-img-top"
+                                                        <center><img style="cursor: pointer;" onclick='GetProductDetails("{{$key['id']}}")' class="card-img-top"
                                                       src="{{config('app.img_url')}}{{$key['image']}}" alt="Card image cap" ></center>
                                                       </div>
                                                        <div class="col-md-7 product-page-slider">
                                                         <div class="card-body">
+                                                          <a href="{{route('product-detail',[$key['id']])}}">
                                                           <p class="card-text">{{$key['name']}}</p>
                                                           <h4 class="card-title"><b>{{$key['sale_price']}}/- PKR</b></h4>
+                                                        </a>
                                                           <span class="card-icons">
                                                               <a href="javascript:void(0)" onclick='AddtoCart("{{$key['id']}}")'><i id="cart_btn_{{$key['id']}}" class="fas fa-shopping-cart" style="
                                                                   <?php if ($key['cart_count'] != 0): ?>
@@ -257,13 +261,17 @@
                               @endif
 
                                 @foreach($all_product as $key)
-                                <div class="col-md-3 mb-4" style="float:left">
-                                    <div class="card mb-2">
-                                        <img class="card-img-top"
+                                <div class="col-md-3 mb-4" style="float:left" >
+                                    <div class="card mb-2" >
+                                        <img style="cursor: pointer;" onclick='GetProductDetails("{{$key['id']}}")' class="card-img-top"
                                         src="{{config('app.img_url')}}{{$key['image']}}" alt="Card image cap">
                                         <div class="card-body">
+                                            <a href="{{route('product-detail',[$key["id"]])}}">
+                                              
                                             <p class="card-text">{{$key['name']}}</p>
                                             <h4 class="card-title"><b>{{$key['sale_price']}}/- PKR</b></h4>
+                                            </a>
+                                            <hr>
                                            <span class="card-icons">
                                                               <a href="javascript:void(0)" onclick='AddtoCart("{{$key['id']}}")'><i id="cart_btn__{{$key['id']}}" class="fas fa-shopping-cart" style="
                                                                   <?php if ($key['cart_count'] != 0): ?>
@@ -463,6 +471,10 @@
         }
         
         window.location.href = "{{ config('app.url')}}product-by-filter/"+id+"/"+text;
+    }
+    function GetProductDetails(prod_id)
+    {
+       window.location.href = "{{ config('app.url')}}product-detail/"+prod_id;
     }
 </script>
 @endsection

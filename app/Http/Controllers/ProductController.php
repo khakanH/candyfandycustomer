@@ -195,7 +195,29 @@ class ProductController extends Controller
     }
 
    
+    public function ProductDetail(Request $request,$prod_id)
+    {
+        try 
+        {   
+            $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
+            $cart_id = empty(session("cart_id"))?0:session("cart_id");
 
+            $product = Product::where('stock','>',0)
+                                  ->where('is_show',1)
+                                  ->where('id',$prod_id)
+                                  ->first();
+
+                                  
+            $product['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first()->product_quantity;
+
+            return view('product_detail',compact('product'));
+        } 
+        catch (Exception $e) 
+        {
+            return response()->json($e,500);
+            
+        }
+    }
 
 }
     

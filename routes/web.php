@@ -59,15 +59,18 @@ Route::get('logout',[AccountController::class, 'Logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'Index'])->name('home');
 
-Route::get('/cart', [CartController::class, 'Index'])->name('cart');
+Route::get('cart', [CartController::class, 'Index'])->name('cart');
 Route::get('add-to-cart/{id}',[CartController::class, 'AddToCart'])->name('add-to-cart');
 Route::get('change-cart-item-qty/{id}/{val}',[CartController::class, 'ChangeCartItemQty'])->name('change-cart-item-qty');
+Route::get('get-cart-details', [CartController::class, 'CartDetails'])->name('get-cart-details');
+Route::get('delete-cart-item/{id}',[CartController::class, 'DeleteCartItem'])->name('delete-cart-item');
 
 
 
 Route::get('product_list',[ProductController::class, 'Index'])->name('product_list');
 Route::get('product-by-filter/{id}/{val}',[ProductController::class, 'ProductByFilter'])->name('product-by-filter');
 
+Route::get('product-detail/{id}',[ProductController::class, 'ProductDetail'])->name('product-detail');
 
 
 
