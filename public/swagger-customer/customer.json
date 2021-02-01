@@ -1,0 +1,212 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is api document of Customer application of Candy Fandy ",
+    "version": "1.0.0",
+    "title": "Candy Fandy Customer Application Api",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost/candyfandy",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Account",
+      "description": "Everything about Customer Account",
+    },
+    {
+      "name": "Test",
+      "description": "Everything about Test Methods and Development",
+    },
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Customer Login portion",
+        "description": "",
+        "operationId": "Login",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Customer object needed for login",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomerLoginModel"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+    "/signup": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Customer Signup portion",
+        "description": "",
+        "operationId": "Signup",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Customer object needed for signup",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomerSignupModel"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+
+
+
+
+
+
+
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "CustomerLoginModel": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "abc@example.com",
+          "required": true
+        },
+        "password": {
+          "type": "string",
+          "example": "12345",
+          "required": true
+        },
+        "device_type": {
+          "type": "int",
+          "example": 1,
+          "required": true
+        },
+        "device_token": {
+          "type": "string",
+          "example": "cwzIAL7hGCE:APA91bFmCeeENFvVZfpkZZd5acSz7wm15bNeDCjM1K0Q5zoPLaUYezToX6RMZqyiVhniLXg0TexFKrKs_39IrfVS1lQbvLAlv7fM7JzWBbtYx266m7gjyL3QdwTl_6s7PMemfeEmBQ34",
+          "required": true
+        }
+      }
+    },
+    "CustomerSignupModel": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Abcd",
+          "required": true
+        },
+        "email": {
+          "type": "string",
+          "example": "abc@example.com",
+          "required": true
+        },
+        "phone": {
+          "type": "string",
+          "example": "+923001234567",
+          "required": 
+        },
+        "password": {
+          "type": "string",
+          "example": "12345",
+          "required": true
+        },
+         "device_type": {
+          "type": "int",
+          "example": 1,
+          "required": true
+        },
+        "device_token": {
+          "type": "string",
+          "example": "cwzIAL7hGCE:APA91bFmCeeENFvVZfpkZZd5acSz7wm15bNeDCjM1K0Q5zoPLaUYezToX6RMZqyiVhniLXg0TexFKrKs_39IrfVS1lQbvLAlv7fM7JzWBbtYx266m7gjyL3QdwTl_6s7PMemfeEmBQ34",
+          "required": true
+        }
+      }
+    },
+
+  }
+
+
+}

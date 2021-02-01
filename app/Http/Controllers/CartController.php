@@ -296,7 +296,7 @@ class CartController extends Controller
             <div class="row popover-btns">
                                     <ul>
                                         <li> 
-                                            <button class="log-reg-btn cart-bottom-btns">Checkout</button> 
+                                            <a href="<?php echo route('checkout') ?>"><button class="log-reg-btn cart-bottom-btns">Checkout</button></a> 
                                             <a href="<?php echo route('cart') ?>" class="popover-link">View Cart</a> 
                                             <span style="margin-left: 31px;"> Total: &nbsp; <span style="color: #3DC4B4; " ><?php echo $cart_detail->sum('product_subtotal') ?> PKR</span></span>
                                             <div class="clear-both"></div>

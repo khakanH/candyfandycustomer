@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\FavoriteProduct;
 use App\Models\Orders;
 use App\Models\OrderDetails;
 use App\Models\Cart;
@@ -67,16 +68,19 @@ class ProductController extends Controller
             foreach ($featured_product as $key) 
             {
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+               $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
             foreach ($best_selling_products as $key) 
             {
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+               $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
             foreach ($all_product as $key) 
             {
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+               $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
 
@@ -169,16 +173,19 @@ class ProductController extends Controller
             foreach ($featured_product as $key) 
             {
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+               $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
             foreach ($best_selling_products as $key) 
             {
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+               $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
             foreach ($all_product as $key) 
             {
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+               $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
 
@@ -209,6 +216,8 @@ class ProductController extends Controller
 
                                   
             $product['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first()->product_quantity;
+             $product['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$prod_id)->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$prod_id)->first()->id;
+
 
             return view('product_detail',compact('product'));
         } 
@@ -218,6 +227,43 @@ class ProductController extends Controller
             
         }
     }
+
+
+
+    public function MarkItemFavorite(Request $request,$prod_id)
+    {
+        try 
+        {   
+            $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
+
+            if (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$prod_id)->count() == 0) 
+            {
+              FavoriteProduct::insert(array(
+                                            'customer_id' => $customer_id,
+                                            'product_id'  => $prod_id,
+                                            'created_at'  => date('Y-m-d H:i:s'),
+                                            'updated_at'  => date('Y-m-d H:i:s'),
+                                      ));
+
+              $toggle = 1; 
+            }
+            else
+            {
+              FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$prod_id)->delete();
+              $toggle = 0;
+            }
+
+            return array("status"=>"1","msg"=>"Success","toggle"=>$toggle);
+
+           
+        } 
+        catch (Exception $e) 
+        {
+            return response()->json($e,500);
+            
+        }
+    }
+
 
 }
     

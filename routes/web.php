@@ -6,6 +6,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 
 use App\Http\Controllers\Admin\AccountController as AdminAccountController;
@@ -71,11 +72,19 @@ Route::get('product_list',[ProductController::class, 'Index'])->name('product_li
 Route::get('product-by-filter/{id}/{val}',[ProductController::class, 'ProductByFilter'])->name('product-by-filter');
 
 Route::get('product-detail/{id}',[ProductController::class, 'ProductDetail'])->name('product-detail');
+Route::get('mark-item-favorite/{id}',[ProductController::class, 'MarkItemFavorite'])->name('mark-item-favorite');
 
 
+Route::get('checkout',[OrderController::class, 'Checkout'])->name('checkout');
 
+Route::post('place-order',[OrderController::class, 'PlaceOrder'])->name('place-order');
 
+Route::get('thankyou',function(){
+	return view('thankyou');
+})->name('thankyou');
 
+Route::get('profile',[AccountController::class, 'Profile'])->name('profile');
+Route::post('save-profile',[AccountController::class, 'SaveProfile'])->name('save-profile');
 
 
 

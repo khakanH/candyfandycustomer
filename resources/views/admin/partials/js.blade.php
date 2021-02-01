@@ -59,12 +59,12 @@
             if (jqxhr.status == 401) 
             {
                 alert("Session expired. You'll be take to the login page");
-                location.href = "{{ config('app.url')}}"; 
+                location.href = "{{ config('app.url')}}admin"; 
             }
             else if(jqxhr.status == 403)
             {
                 alert("Sorry, You're not allowed to visit requested page. Taking you to Dashboard Page.");
-                location.href = "{{ config('app.url')}}";
+                location.href = "{{ config('app.url')}}admin";
             }
             else
             {

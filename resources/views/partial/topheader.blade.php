@@ -18,7 +18,7 @@
                 <i class="fas fa-user"></i> 
                 &nbsp;
                  @if(session('login'))
-                    <a class="text-white" href="">{{ucfirst(session('login.customer_name'))}}</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a class="text-white" href="{{route('logout')}}">Logout</a>
+                    <a class="text-white" href="{{route('profile')}}">{{ucfirst(session('login.customer_name'))}}</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a class="text-white" href="{{route('logout')}}">Logout</a>
                  @else
                     <a class="text-white" href="{{route('login-form')}}"> Log In </a>/
                     <a class="text-white" href="{{route('signup-form')}}"> Sign Up</a>

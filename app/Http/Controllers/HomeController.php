@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\FavoriteProduct;
 use App\Models\Orders;
 use App\Models\OrderDetails;
 use App\Models\Cart;
@@ -59,15 +60,16 @@ class HomeController extends Controller
             foreach ($featured_product as $key) 
             {
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
             foreach ($best_selling_products as $key) 
             {
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+               $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() == "")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
             $featured_product = $featured_product->toArray();
-
            
             return view('home',compact('category','featured_product','best_selling_products'));
         } 

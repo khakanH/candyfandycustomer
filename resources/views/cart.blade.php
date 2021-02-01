@@ -135,7 +135,7 @@
                                      </div>
                                 </div>
                                 <div class="col-md-8  link-btn-wrapper cart-btns">
-                                    <a href="#" class="log-reg-btn text-white cart-bottom-btns">Checkout</a> 
+                                    <a href="{{route('checkout')}}" class="log-reg-btn text-white cart-bottom-btns">Checkout</a> 
                                     <a href="{{route('product_list')}}" class="log-reg-btn text-white cart-bottom-btns">Continue Shopping</a> 
                                 </div>
                              </div>

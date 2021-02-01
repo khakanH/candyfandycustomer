@@ -21,8 +21,19 @@
                                           <h2 class="m-0">{{$product->name}}</h2>
                                       </li>
                                         <br>
-                                        <a href="#"> <span class="fa fa-heart"></span>
-                                        <span  style="color: #3dc4b4; text-align: left;">&nbsp; Add to my Favorites</span></a>
+                                        <a href="javascript:void(0)" onclick='MarkItemFavorite("{{$product->id}}")' style=" 
+                                                        <?php if (!empty($product->favorite_id)): ?>
+                                                            color: red;
+                                                        <?php endif; ?>"
+                                                     id="fav_btn{{$product->id}}"> <span class="fa fa-heart"></span>
+                                        <span id="fav_text"  style="color: #3dc4b4; text-align: left;">&nbsp; 
+                                        <?php if (empty($product->favorite_id)): ?>
+                                        Add to my Favorites
+                                        <?php else: ?>
+                                        Remove from my Favorites
+                                        <?php endif; ?>
+
+                                        </span></a>
                                      </li>
                                   </ul>
 
@@ -141,5 +152,56 @@
         }
     });
     }
+
+
+     function MarkItemFavorite(prod_id)
+    {
+        var customer_id = "<?php echo session("login.customer_id") ?>";
+
+        if (!customer_id) 
+        {
+            alert('Kindly Login First to Mark Item Favorite.');
+            return
+        }
+
+        $.ajax({
+        type: "GET",
+        url: "{{ config('app.url')}}mark-item-favorite/"+prod_id,
+        beforeSend: function(){
+                            $('#LoadingModal').modal('show');
+                        },
+        success: function(data) {
+                            $('#LoadingModal').modal('hide');
+                get_status = data['status'];
+                get_msg    = data['msg'];
+
+                                if (get_status == "1") 
+                                {
+                                    if (data['toggle'] == 1) 
+                                    {
+                                            document.getElementById("fav_btn"+prod_id).style.color = "red";
+                                            document.getElementById("fav_text").innerHTML = "&nbsp; Remove from my Favorites";
+                                    }
+                                    else
+                                    {
+                                            document.getElementById("fav_btn"+prod_id).style.color = "#8898aa";
+                                            document.getElementById("fav_text").innerHTML = "&nbsp; Add to my Favorites";
+
+                                    }
+                                }
+
+
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Exception:' + errorThrown);
+        }
+    });
+
+
+
+    }
+
+
 </script>
 @endsection

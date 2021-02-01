@@ -23185,7 +23185,7 @@ fieldset:disabled a.btn {
 }
 
 .navbar-nav .dropdown-menu {
-	/*position: static;*/
+	position: static;
 	float: none
 }
 
@@ -23539,7 +23539,7 @@ fieldset:disabled a.btn {
 	background-clip: border-box;
 	border: 0 solid transparent;
 	border-radius: 0;
-	/*cursor: pointer;*/
+	cursor: pointer;
 }
 
 .card>hr {
@@ -38854,7 +38854,7 @@ body .jqstooltip {
 ul.breadcrumb {
 	/* padding: 10px 16px; */
 	list-style: none;
-	/* background-color: #eee; */
+	background-color: #eee0;
   }
   
   /* Display list items side by side */
@@ -38893,7 +38893,7 @@ ul.breadcrumb {
 	  margin-left: -14px;
   }
   .cart-img{
-	  height: 150px;
+	  height: 95px;
   }
   .text{
 	  padding: 0;
@@ -39057,9 +39057,114 @@ ul.breadcrumb {
 	font-size: 19px;
 }
 /* product detail ends here */
+/* ========================================================================= */
+/* checkout starts here */
+.checkout-form{
+	background-color: #ffffff;
+	padding: 46px 67px
+}
+
+.checkout-form h4{
+	color: #3dc4b4;
+	margin-left: -16px;
+    font-size: 19px;
+    font-weight: 500;
+}
+.form-content label{
+	color:  #939598;
+}
+.country{
+	display: inline;
+}
+.city{
+	display: inline;
+}
+.payment label{
+	color:  #939598;
+}
+.radioinput {
+	color: green;
+	background-color: #ccc;        
+   }
+.order-content{
+
+	background-color: #ffffff;
+}
+.order-summary{
+	padding: 20px 30px;
+}
+.order-heading{
+border-bottom:  2px solid #93959859;
+/* padding-bottom: 10px; */
+}
+.order-heading h5{
+	text-align: center;
+	color:  #939598;
+	margin: 0;
+}
+.order-history-content{
+	border-bottom:  1px solid #93959859;
+	color: #939598;
+	font-weight: 400;
+}
+.sub-total{
+	color:  #939598;
+	font-weight: 400;
+}
+.view-cart-link a{
+	color: #3dc4b4;
+}
+.thankyou-row{
+	padding: 42px 42px 20px 42px;
+	background-color: #ffffff;
+}
+.thankyou-heading h2{
+	color: #3dc4b4;
+	font-weight: 600;
+}
+.thankyou-heading p {
+	color: #939598;
+}
+.thankyou-heading a{
+	color: #3dc4b4;
+}
+.back-link{
+	position: absolute;
+	bottom: 0;
+}
+/* checkout ends here */
+/* ================================================================== */
+/* profile starts here */
+.profile-heading h2{
+	color: #3dc4b4;
+	margin-left: -16px;
+	font-weight: 600;
+}
+.profile-heading {
+	/* max-width: 60%; */
+}
+.profile-heading p{
+	border-bottom:  1px solid #93959859;
+	margin-left: -16px;
+	padding-bottom: 10px;
+}
+.profile-row{
+	padding: 42px !important;
+}
+
+.profile-heading form label, input{
+    color: #939598;
+    font-weight: 500;
+}
+
+/* profile ends here */
 /* =========================media query============================== */
 /* Responsive columns */
 @media screen and (max-width: 500px) {
+	.profile-row {   
+		margin: 0;
+	} 
+
 	.link-btn-wrapper span{
 		
 		margin-top: 20px;
@@ -39072,6 +39177,8 @@ ul.breadcrumb {
 	.cart-img{
 		height: auto;
 		padding-right: 10px;
+		font-size: 16px;
+		font-weight: 400;
 	}
 	.cart-card-body{
 		margin-top: 11px;
@@ -39106,7 +39213,29 @@ ul.breadcrumb {
 		padding: 0;
 		margin-top: 10px;
 	}
+	.checkout-form{
+		margin: 0 10px;
+	}
+	.order-row{
+		padding: 0;
+		margin: 0 10px 20px 10px;
+	}
 	
+	.thankyou-img{
+		margin-top: 15px;
+	}
+	.thankyou-heading p {
+		margin-bottom: 37px;
+	}
+	.city-field{
+		padding: 0;
+	}
+	.profile-heading form .lastname {
+		padding: 0;
+	}
+	.profile-heading {
+		max-width: 100%;
+	}
 	/* .text i {
 		position: absolute;
 		top: -408px;

@@ -137,7 +137,7 @@
                     <!-- product cards starts here -->
                     <!--Carousel Wrapper-->
                     <div class="row card-row">
-                        <div id="feature-product-slder-btn" class="carousel slide carousel-multi-item" data-ride="carousel">
+                        <div id="feature-product-slder-btn" class="carousel slide carousel-multi-item" data-ride="carousel" data-interval="12000">
 
                         <!--Slides-->
                             <div class="carousel-inner" style="overflow: initial;" role="listbox">
@@ -178,7 +178,11 @@
                                                     <?php endif ?>
                                                     
                                                     width: 60px; background: #e6e7e9; border: solid darkgray 1px; padding: 4px; height: 100%;">
-                                                    <a href="javascript:void(0)"><i class="fas fa-heart"></i></a>
+                                                    <a href="javascript:void(0)" onclick='MarkItemFavorite("{{$key['id']}}")' style=" 
+                                                        <?php if (!empty($key['favorite_id'])): ?>
+                                                            color: red;
+                                                        <?php endif; ?>"
+                                                     id="fav_btn{{$key['id']}}"><i  class="fas fa-heart"></i></a>
                                                 </span>
                                             </div>
                                         </div>
@@ -245,7 +249,7 @@
                     <!-- product cards starts here -->
                     <!--Carousel Wrapper-->
                     <div class="row card-row">
-                        <div id="best-seller-slider-btn" class="carousel slide carousel-multi-item" data-ride="carousel">
+                        <div id="best-seller-slider-btn" class="carousel slide carousel-multi-item" data-ride="carousel" data-interval="15000">
 
                            
                             <!--Slides-->
@@ -286,7 +290,11 @@
                                                     <?php endif ?>
                                                     
                                                     width: 60px; background: #e6e7e9; border: solid darkgray 1px; padding: 4px; height: 100%;">
-                                                    <a href="javascript:void(0)"><i class="fas fa-heart"></i></a>
+                                                    <a href="javascript:void(0)" onclick='MarkItemFavorite("{{$key['id']}}")' style=" 
+                                                        <?php if (!empty($key['favorite_id'])): ?>
+                                                            color: red;
+                                                        <?php endif; ?>"
+                                                     id="fav_btn_{{$key['id']}}"><i class="fas fa-heart"></i></a>
                                                 </span>
                                             </div>
                                         </div>
@@ -474,10 +482,82 @@
         
         window.location.href = "{{ config('app.url')}}product-by-filter/"+id+"/"+text;
     }
+
+
     function GetProductDetails(prod_id)
     {
        window.location.href = "{{ config('app.url')}}product-detail/"+prod_id;
     }
+
+
+
+    function MarkItemFavorite(prod_id)
+    {
+        var customer_id = "<?php echo session("login.customer_id") ?>";
+
+        if (!customer_id) 
+        {
+            alert('Kindly Login First to Mark Item Favorite.');
+            return
+        }
+
+        var FP_fav_btn = document.getElementById("fav_btn"+prod_id);
+        var BS_fav_btn = document.getElementById("fav_btn_"+prod_id);
+
+
+        $.ajax({
+        type: "GET",
+        url: "{{ config('app.url')}}mark-item-favorite/"+prod_id,
+        beforeSend: function(){
+                            $('#LoadingModal').modal('show');
+                        },
+        success: function(data) {
+                            $('#LoadingModal').modal('hide');
+                get_status = data['status'];
+                get_msg    = data['msg'];
+
+                                if (get_status == "1") 
+                                {
+                                    if (data['toggle'] == 1) 
+                                    {
+                                        if (FP_fav_btn) 
+                                        {
+                                            document.getElementById("fav_btn"+prod_id).style.color = "red";
+                                        }
+
+                                        if (BS_fav_btn) 
+                                        {
+                                            document.getElementById("fav_btn_"+prod_id).style.color = "red";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (FP_fav_btn) 
+                                        {
+                                            document.getElementById("fav_btn"+prod_id).style.color = "#8898aa";
+                                        }
+
+                                        if (BS_fav_btn) 
+                                        {
+                                            document.getElementById("fav_btn_"+prod_id).style.color = "#8898aa";
+                                        }
+                                    }
+                                }
+
+
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Exception:' + errorThrown);
+        }
+    });
+
+
+
+    }
+
+
+
 </script>
 
 

@@ -15,7 +15,18 @@
                                 <a href="javascript:void(0)"><i class="fa fa-search" ></i></a>
                             </div>
                         </div> -->
-                        
+                          
+                           <center>
+                                    @if(session('success'))
+                                                <p class="text-success pulse animated">{{ session('success') }}</p>
+                                                {{ session()->forget('success') }}
+                                                @elseif(session('failed'))
+                                                <p class="text-danger pulse animated">{{ session('failed') }}</p>
+                                                {{ session()->forget('failed') }}
+                                    @endif
+                                    </center>
+
+
                          <!--category grids starts here  -->
                         <div class="categories-wrapper  mb-5" id="cate_listing_div" style="display: flex;  float: none; height: 100px; white-space: nowrap; overflow-x:  scroll; overflow-y: hidden; padding-top: 10px; position: relative;">
                             @foreach($category as $key)
@@ -93,7 +104,11 @@
                                                               <?php endif ?>
                                                               
                                                               width: 50px; background: #e6e7e9; border: solid darkgray 1px; padding: 4px; height: 100%;">
-                                                              <a href="javascript:void(0)"><i class="fas fa-heart"></i></a>
+                                                              <a href="javascript:void(0)" onclick='MarkItemFavorite("{{$key['id']}}")' style=" 
+                                                        <?php if (!empty($key['favorite_id'])): ?>
+                                                            color: red;
+                                                        <?php endif; ?>"
+                                                     id="fav_btn{{$key['id']}}"><i class="fas fa-heart"></i></a>
                                                           </span>
                                                       </div>
                                                        </div>
@@ -199,7 +214,11 @@
                                                               <?php endif ?>
                                                               
                                                               width: 50px; background: #e6e7e9; border: solid darkgray 1px; padding: 4px; height: 100%;">
-                                                              <a href="javascript:void(0)"><i class="fas fa-heart"></i></a>
+                                                              <a href="javascript:void(0)" onclick='MarkItemFavorite("{{$key['id']}}")' style=" 
+                                                        <?php if (!empty($key['favorite_id'])): ?>
+                                                            color: red;
+                                                        <?php endif; ?>"
+                                                     id="fav_btn_{{$key['id']}}"><i class="fas fa-heart"></i></a>
                                                           </span>
                                                       </div>
                                                        </div>
@@ -284,7 +303,11 @@
                                                               <?php endif ?>
                                                               
                                                               width: 50px; background: #e6e7e9; border: solid darkgray 1px; padding: 4px; height: 100%;">
-                                                              <a href="javascript:void(0)"><i class="fas fa-heart"></i></a>
+                                                              <a href="javascript:void(0)" onclick='MarkItemFavorite("{{$key['id']}}")' style=" 
+                                                        <?php if (!empty($key['favorite_id'])): ?>
+                                                            color: red;
+                                                        <?php endif; ?>"
+                                                     id="fav_btn__{{$key['id']}}"><i class="fas fa-heart"></i></a>
                                                           </span>
                                         </div>
                                     </div>
@@ -475,6 +498,82 @@
     function GetProductDetails(prod_id)
     {
        window.location.href = "{{ config('app.url')}}product-detail/"+prod_id;
+    }
+
+
+    function MarkItemFavorite(prod_id)
+    {
+        var customer_id = "<?php echo session("login.customer_id") ?>";
+
+        if (!customer_id) 
+        {
+            alert('Kindly Login First to Mark Item Favorite.');
+            return
+        }
+
+        var FP_fav_btn = document.getElementById("fav_btn"+prod_id);
+        var BS_fav_btn = document.getElementById("fav_btn_"+prod_id);
+        var AP_fav_btn = document.getElementById("fav_btn__"+prod_id);
+
+
+        $.ajax({
+        type: "GET",
+        url: "{{ config('app.url')}}mark-item-favorite/"+prod_id,
+        beforeSend: function(){
+                            $('#LoadingModal').modal('show');
+                        },
+        success: function(data) {
+                            $('#LoadingModal').modal('hide');
+                get_status = data['status'];
+                get_msg    = data['msg'];
+
+                                if (get_status == "1") 
+                                {
+                                    if (data['toggle'] == 1) 
+                                    {
+                                        if (FP_fav_btn) 
+                                        {
+                                            document.getElementById("fav_btn"+prod_id).style.color = "red";
+                                        }
+
+                                        if (BS_fav_btn) 
+                                        {
+                                            document.getElementById("fav_btn_"+prod_id).style.color = "red";
+                                        }
+                                        if (AP_fav_btn) 
+                                        {
+                                            document.getElementById("fav_btn__"+prod_id).style.color = "red";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (FP_fav_btn) 
+                                        {
+                                            document.getElementById("fav_btn"+prod_id).style.color = "#8898aa";
+                                        }
+
+                                        if (BS_fav_btn) 
+                                        {
+                                            document.getElementById("fav_btn_"+prod_id).style.color = "#8898aa";
+                                        }
+
+                                        if (AP_fav_btn) 
+                                        {
+                                            document.getElementById("fav_btn__"+prod_id).style.color = "#8898aa";
+                                        }
+                                    }
+                                }
+
+
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Exception:' + errorThrown);
+        }
+    });
+
+
+
     }
 </script>
 @endsection

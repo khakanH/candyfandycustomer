@@ -177,7 +177,20 @@ class OrderController extends Controller
                     <div class="row">
                       <div class="col-md">
                         <label class="tx-uppercase tx-13 tx-bold">Customer Information</label>
-                            
+                          <p class="justify-content-between">
+                          <span>Customer Name: </span>
+                          <span><?php echo $key['customer_name'] ?></span>
+                        </p>
+                        <p class="justify-content-between">
+                          <span>Customer Phone: </span>
+                          <span><?php echo $key['customer_phone'] ?></span>
+                        </p>
+                        
+                        <p class="justify-content-between">
+                          <span>Delivery Address:</span>
+                          <span><?php echo $key['delivery_address'] ?></span>
+                        </p>
+                          
                        
                       </div><!-- col -->
                       
@@ -189,7 +202,7 @@ class OrderController extends Controller
                         </p>
                         <p class="d-flex justify-content-between">
                           <span>Order Time: </span>
-                          <span><?php echo date('M d,Y h:i a',strtotime($key['created_at'])) ?></span>
+                          <span><?php echo date('M d, Y h:i a',strtotime($key['created_at'])) ?></span>
                         </p>
                         
                         <p class="d-flex justify-content-between">
@@ -340,7 +353,19 @@ class OrderController extends Controller
                     <div class="row">
                       <div class="col-md">
                         <label class="tx-uppercase tx-13 tx-bold">Customer Information</label>
-                            
+                                   <p class="justify-content-between">
+                          <span>Customer Name: </span>
+                          <span><?php echo $key['customer_name'] ?></span>
+                        </p>
+                        <p class="justify-content-between">
+                          <span>Customer Phone: </span>
+                          <span><?php echo $key['customer_phone'] ?></span>
+                        </p>
+                        
+                        <p class="justify-content-between">
+                          <span>Delivery Address:</span>
+                          <span><?php echo $key['delivery_address'] ?></span>
+                        </p>     
                        
                       </div><!-- col -->
                       
@@ -507,7 +532,19 @@ class OrderController extends Controller
                     <div class="row">
                       <div class="col-md">
                         <label class="tx-uppercase tx-13 tx-bold">Customer Information</label>
-                            
+                                   <p class="justify-content-between">
+                          <span>Customer Name: </span>
+                          <span><?php echo $key['customer_name'] ?></span>
+                        </p>
+                        <p class="justify-content-between">
+                          <span>Customer Phone: </span>
+                          <span><?php echo $key['customer_phone'] ?></span>
+                        </p>
+                        
+                        <p class="justify-content-between">
+                          <span>Delivery Address:</span>
+                          <span><?php echo $key['delivery_address'] ?></span>
+                        </p>     
                        
                       </div><!-- col -->
                       
@@ -674,7 +711,19 @@ class OrderController extends Controller
                       <div class="col-md">
                         <label class="tx-uppercase tx-13 tx-bold">Customer Information</label>
                             
-                       
+                                   <p class="justify-content-between">
+                          <span>Customer Name: </span>
+                          <span><?php echo $key['customer_name'] ?></span>
+                        </p>
+                        <p class="justify-content-between">
+                          <span>Customer Phone: </span>
+                          <span><?php echo $key['customer_phone'] ?></span>
+                        </p>
+                        
+                        <p class="justify-content-between">
+                          <span>Delivery Address:</span>
+                          <span><?php echo $key['delivery_address'] ?></span>
+                        </p>
                       </div><!-- col -->
                       
                       <div class="col-md">
@@ -851,7 +900,19 @@ class OrderController extends Controller
                     <div class="row">
                       <div class="col-md">
                         <label class="tx-uppercase tx-13 tx-bold">Customer Information</label>
-                            
+                                   <p class="justify-content-between">
+                          <span>Customer Name: </span>
+                          <span><?php echo $key['customer_name'] ?></span>
+                        </p>
+                        <p class="justify-content-between">
+                          <span>Customer Phone: </span>
+                          <span><?php echo $key['customer_phone'] ?></span>
+                        </p>
+                        
+                        <p class="justify-content-between">
+                          <span>Delivery Address:</span>
+                          <span><?php echo $key['delivery_address'] ?></span>
+                        </p>     
                        
                       </div><!-- col -->
                       

@@ -86,6 +86,7 @@ class AccountController extends Controller
                             'email'             => strtolower(trim($input['email'])),
                             'password'          => Hash::make($input['password']),
                             'phone'             => "",
+                            'address'           => "",
                             'profile_image'     => "customer/default_user_icon.png",
                             'verification_code' => $code,
                             'account_status'    => 0,
@@ -99,14 +100,7 @@ class AccountController extends Controller
 
             if($id)
             {   
-                Cart::insertGetId(array(
-                                      "customer_id" => $id,
-                                      "total_price" => 0,
-                                      "total_item"  => 0,
-                                      "created_at"  => date("Y-m-d H:i:s"),
-                                      "updated_at"  => date("Y-m-d H:i:s"),
-                  ));
-
+               
                 $request->session()->put("success","Account Created Successfully!");
                 return redirect()->route('login-form');
             }
@@ -170,23 +164,75 @@ class AccountController extends Controller
                                 "customer_account_status"        => $check_account->account_status,
                            );
 
-            $cart_id = Cart::where('customer_id',$check_account->id)->first();
-            if ($cart_id == "") 
+            
+
+            if (empty(session('cart_id'))) 
             {
-                $cart_id = Cart::insertGetId(array(
-                                        "customer_id" => $check_account->id,
-                                        "total_price" => 0,
-                                        "total_item"  => 0,
-                                        "created_at"  => date("Y-m-d H:i:s"),
-                                        "updated_at"  => date("Y-m-d H:i:s"),
-                            ));
+                $cart_id = Cart::where('customer_id',$check_account->id)->first();
+              
+
+                if ($cart_id == "") 
+                {
+                    $cart_id = Cart::insertGetId(array(
+                                            "customer_id" => $check_account->id,
+                                            "total_price" => 0,
+                                            "total_item"  => 0,
+                                            "created_at"  => date("Y-m-d H:i:s"),
+                                            "updated_at"  => date("Y-m-d H:i:s"),
+                                ));
 
 
+                }
+                else
+                {
+                    $cart_id = $cart_id->id;
+                }
             }
             else
             {
-                $cart_id = $cart_id->id;
+                
+                $check_cust_cart = Cart::where('customer_id',$check_account->id)->first();
+
+                if ($check_cust_cart == "") 
+                {
+                    $cart_id = Cart::where('id',session('cart_id'))->first();
+                    if ($cart_id == "") 
+                    {
+                        $cart_id = Cart::insertGetId(array(
+                                                "customer_id" => $check_account->id,
+                                                "total_price" => 0,
+                                                "total_item"  => 0,
+                                                "created_at"  => date("Y-m-d H:i:s"),
+                                                "updated_at"  => date("Y-m-d H:i:s"),
+                                    ));
+
+
+                    }
+                    else
+                    {
+                        $cart_id = $cart_id->id;
+                    }
+
+
+
+                    Cart::where('id',$cart_id)->update(array('customer_id'=>$check_account->id));
+                    CartDetail::where('cart_id',$cart_id)->update(array('customer_id'=>$check_account->id));
+
+                }
+                else
+                {
+                    $cart_id = $check_cust_cart->id;
+
+                }
+              
+
+    
             }
+
+
+
+
+
             $request->session()->put("login",$result);
             $request->session()->put("cart_id",$cart_id);
             $request->session()->put("cart_total_item",Cart::where('id',$cart_id)->first()->total_item);
@@ -202,6 +248,106 @@ class AccountController extends Controller
 
 
 
+
+    public function Profile(Request $request)
+    {   
+      try 
+        {
+          $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
+
+          $customer_info = Customer::where('id',$customer_id)->first();
+
+          if ($customer_info == "") 
+          {
+            if($request->ajax()) 
+            {
+              return response()->json(['status'=>"0",'msg' => 'Kindly login first'],401);
+            }
+            else
+            {
+              return redirect()->route('login-form')->with('failed','Kindly login first');
+            }          
+          }
+
+          
+
+          return view('profile',compact('customer_info'));
+        } 
+        catch (Exception $e) 
+        {
+            return response()->json($e,500);
+        }
+    }
+
+
+
+
+
+
+
+    public function SaveProfile(Request $request)
+    {   
+      try 
+        {
+          $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
+
+          $customer_info = Customer::where('id',$customer_id)->first();
+
+          if ($customer_info == "") 
+          {
+            if($request->ajax()) 
+            {
+              return response()->json(['status'=>"0",'msg' => 'Kindly login first'],401);
+            }
+            else
+            {
+              return redirect()->route('login-form')->with('failed','Kindly login first');
+            }          
+          }
+
+
+
+          $validator = \Validator::make($request->all(), [
+                                                                'name'     => 'required',
+                                                                'address'  => 'required',
+                                                                'phone'    => 'required', 
+                                                                'email'    => 'required', 
+                                                            ]);
+            
+
+            if ($validator->fails()) 
+            {   
+                return redirect()->back()->with('failed','Kindly fill all required fields.');
+            }
+
+            $input = $request->all();
+
+            $data =array(
+                                                    "name"      => $input['name'],
+                                                    "email"     => strtolower(trim($input['email'])),
+                                                    "address"   => $input['address'],
+                                                    "phone"     => $input['phone'],
+                                                );
+            if(Customer::where('id',$customer_id)->update($data))
+            {
+                $request->session()->put("login.customer_name",$input['name']);
+                $request->session()->put("login.customer_email",strtolower(trim($input['email'])));
+                return redirect()->route('profile')->with('success',"Profile Updated Successfully");
+            }
+            else
+            {
+                return redirect()->route('profile')->with('failed',"Failed to Update Profile.");
+            }
+
+          
+
+          return view('profile',compact('customer_info'));
+        } 
+        catch (Exception $e) 
+        {
+            return response()->json($e,500);
+        }
+    }
 
 
 

@@ -101,7 +101,19 @@
                     <div class="row">
                       <div class="col-md">
                         <label class="tx-uppercase tx-13 tx-bold">Customer Information</label>
-                            
+                        <p class="justify-content-between">
+                          <span>Customer Name: </span>
+                          <span>{{$key['customer_name']}}</span>
+                        </p>
+                        <p class="justify-content-between">
+                          <span>Customer Phone: </span>
+                          <span>{{$key['customer_phone']}}</span>
+                        </p>
+                        
+                        <p class="justify-content-between">
+                          <span>Delivery Address:</span>
+                          <span>{{$key['delivery_address']}}</span>
+                        </p>
                        
                       </div><!-- col -->
                       
@@ -113,11 +125,11 @@
                         </p>
                         <p class="d-flex justify-content-between">
                           <span>Order Time: </span>
-                          <span>{{date('M d,Y h:i a',strtotime($key['created_at']))}}</span>
+                          <span>{{date('M d, Y h:i a',strtotime($key['created_at']))}}</span>
                         </p>
                         
                         <p class="d-flex justify-content-between">
-                          <span>Payment Method</span>
+                          <span>Payment Method:</span>
                           <span>{{$key['payment_type']}}</span>
                         </p>
                         <p class="d-flex justify-content-between">
