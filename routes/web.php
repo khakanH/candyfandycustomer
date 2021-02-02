@@ -15,10 +15,14 @@ use App\Http\Controllers\Admin\InventoryController as AdminInventoryController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\SaleController as AdminSaleController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\GeneralSettingController as AdminGeneralSettingController;
 
 
 use App\Models\UserRole;
 use App\Models\Modules;
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +33,8 @@ use App\Models\Modules;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 
 Route::get('/refresh', function(Request $request)
 {
@@ -85,6 +91,12 @@ Route::get('thankyou',function(){
 
 Route::get('profile',[AccountController::class, 'Profile'])->name('profile');
 Route::post('save-profile',[AccountController::class, 'SaveProfile'])->name('save-profile');
+
+Route::get('favorite_products',[ProductController::class, 'FavoriteProduct'])->name('favorite_products');
+
+
+
+
 
 
 
@@ -156,10 +168,6 @@ Route::get('get-rejected-order',[AdminOrderController::class, 'RejectedOrderList
 
 
 
-
-
-
-
 Route::get('sale',[AdminSaleController::class, 'Index'])->name('sale');
 
 
@@ -177,6 +185,23 @@ Route::get('user-roles',[AdminUserController::class, 'UserRoles'])->name('user-r
 Route::post('save-roles',[AdminUserController::class,'SaveRoles'])->name('save-roles');
 Route::get('get-user-roles-AJAX/{id}',[AdminUserController::class,'UserRolesAJAX'])->name('get-user-roles-AJAX');
 
+
+
+
+
+
+
+
+
+
+
+
+Route::get('general-setting',[AdminGeneralSettingController::class, 'Index'])->name('general-setting');
+Route::post('save-general-setting',[AdminGeneralSettingController::class, 'SaveGeneralSetting'])->name('save-general-setting');
+Route::get('payment-method',[AdminGeneralSettingController::class, 'PaymentMethod'])->name('payment-method');
+Route::post('add-update-payment-method',[AdminGeneralSettingController::class, 'AddUpdatePaymentMethod'])->name('add-update-payment-method');
+Route::get('change-payment-method-availability/{id}/{val}',[AdminGeneralSettingController::class, 'ChangePaymentAvailability'])->name('change-payment-method-availability');
+Route::get('get-payment-method-list-AJAX',[AdminGeneralSettingController::class, 'PaymentMethodListAJAX'])->name('get-payment-method-list-AJAX');
 });
 
 

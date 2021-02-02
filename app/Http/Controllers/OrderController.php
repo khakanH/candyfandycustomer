@@ -12,6 +12,9 @@ use App\Models\Cart;
 use App\Models\CartDetail;
 use App\Models\Product;
 
+use App\Models\GeneralSetting;
+use App\Models\PaymentMethod;
+
 
 use DB;
 
@@ -30,6 +33,9 @@ class OrderController extends Controller
         {
           $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
           $cart_id = empty(session("cart_id"))?0:session("cart_id");
+
+          $shipping_discount =GeneralSetting::first();
+          $payment_method =PaymentMethod::where('is_show',1)->get();
 
           $customer_info = Customer::where('id',$customer_id)->first();
 
@@ -59,8 +65,9 @@ class OrderController extends Controller
             }     
           }
 
+          $cart_info->all_total = $cart_info->total_price + $shipping_discount->shipping_fee -($cart_info->total_price * ($shipping_discount->discount/100));
 
-          return view('checkout',compact('customer_info','cart_info'));
+          return view('checkout',compact('customer_info','cart_info','shipping_discount','payment_method'));
         } 
         catch (Exception $e) 
         {
@@ -75,6 +82,8 @@ class OrderController extends Controller
         {
           $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
           $cart_id = empty(session("cart_id"))?0:session("cart_id");
+
+          $shipping_discount =GeneralSetting::first();
 
           $customer_info = Customer::where('id',$customer_id)->first();
 
@@ -123,6 +132,9 @@ class OrderController extends Controller
 
             $order_number = time().rand(1111,9999);
 
+            $total_paid_amount =  $cart_info->total_price + $shipping_discount->shipping_fee -($cart_info->total_price * ($shipping_discount->discount/100));
+
+
             $order_id = Orders::insertGetId(array(
                                   "order_number"        => $order_number,
                                   "customer_id"         => $customer_id,
@@ -136,10 +148,10 @@ class OrderController extends Controller
                                   "cancel_type"         => 0,
                                   "payment_type"        => $input['payment'],
                                   "is_paid"             => ($input['payment'] == 1)?1:0,
-                                  "delivery_fee"        => 0,
+                                  "delivery_fee"        => $shipping_discount->shipping_fee,
                                   "order_amount"        => $cart_info->total_price,
-                                  "discount"            => 0,
-                                  "total_paid_amount"   => $cart_info->total_price,
+                                  "discount"            => ($cart_info->total_price * ($shipping_discount->discount/100) ),
+                                  "total_paid_amount"   => $total_paid_amount,
                                   "total_item"          => $cart_info->total_item,
                                   "created_at"          => date('Y-m-d H:i:s'),
                                   "updated_at"          => date('Y-m-d H:i:s'),

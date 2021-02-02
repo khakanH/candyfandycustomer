@@ -311,6 +311,7 @@ class InventoryController extends Controller
                         "description"            => $input['prod_descrip'],
                         "stock"                 => $input['prod_stock'],
                         "is_show"               => 1,
+                        "is_featured"           => $input['is_featured'],
                         "created_at"            => date('Y-m-d H:i:s'),
                         "updated_at"            => date('Y-m-d H:i:s'),
                         );
@@ -389,6 +390,7 @@ class InventoryController extends Controller
                         "image"                 => $path,
                         "description"           => $input['prod_descrip'],
                         "stock"                 => $input['prod_stock'],
+                        "is_featured"           => $input['is_featured'],
                         );
                 if(Product::where('id',$input['prod_id'])->update($data))
                 {
@@ -462,7 +464,7 @@ class InventoryController extends Controller
                             </div>
                         </td>
                         <td class="text-center">
-                                                    <a class="btn btn-primary" href="javascript:void(0)" onclick='EditProduct("<?php echo $key['id']?>","<?php echo $key['name']?>","<?php echo $key['category_id']?>","<?php echo $key['actual_price']?>","<?php echo $key['sale_price']?>","<?php echo $key['stock']?>","<?php echo $key['description']?>","<?php echo $key['image']?>")'><i class="fa fa-edit tx-15"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-danger" onclick='DeleteProduct("<?php echo $key['id'] ?>")' href="javascript:void(0)"><i class="fa fa-trash tx-15"></i></a>
+                                                    <a class="btn btn-primary" href="javascript:void(0)" onclick='EditProduct("<?php echo $key['id']?>","<?php echo $key['name']?>","<?php echo $key['category_id']?>","<?php echo $key['actual_price']?>","<?php echo $key['sale_price']?>","<?php echo $key['stock']?>","<?php echo $key['description']?>","<?php echo $key['image']?>","<?php echo $key['is_featured']?>")'><i class="fa fa-edit tx-15"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-danger" onclick='DeleteProduct("<?php echo $key['id'] ?>")' href="javascript:void(0)"><i class="fa fa-trash tx-15"></i></a>
                                                 </td>
                     </tr>
 

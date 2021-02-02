@@ -95,21 +95,21 @@
                                              <ul>
                                                  <li class="card-text">Shipping: &nbsp;&nbsp;&nbsp;&nbsp;
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                                                 <li class="card-title" >0 PKR</li>
+                                                 <li class="card-title" >{{$shipping_discount->shipping_fee}} PKR</li>
                                              </ul>
                                          </div>
                                          <div class="amount-qty mb-1"> 
                                             <ul>
                                                 <li class="card-text">Discount: &nbsp;&nbsp;&nbsp;&nbsp;
                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                                                <li class="card-title" >0 PKR</li>
+                                                <li class="card-title" >{{$shipping_discount->discount}} %</li>
                                             </ul>
                                         </div>
                                         <div class="amount-qty "> 
                                             <ul>
                                                 <li class="card-text">Sub Total: &nbsp;&nbsp;&nbsp;&nbsp;
                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                                                <li class="card-title" ><b id="cart_total_price1">{{$cart->total_price}} PKR</b></li>
+                                                <li class="card-title" ><b id="cart_total_price1">{{$cart->all_total}} PKR</b></li>
                                             </ul>
                                         </div>
                                         
@@ -183,7 +183,7 @@
                                 else
                                 {
                                          document.getElementById("cart_item_qty"+prod_id).value = data['product_count'];
-                                        document.getElementById("cart_total_price1").innerHTML = data['cart_total_price']+ " PKR";
+                                        document.getElementById("cart_total_price1").innerHTML = data['all_total_price']+ " PKR";
                                          document.getElementById("cart_total_price2").innerHTML = data['cart_total_price']+ " PKR";
                                           document.getElementById("cart_item_subtotal"+prod_id).innerHTML = data['cart_item_subtotal']+ " PKR";
                                    
@@ -223,7 +223,7 @@
                                          document.getElementById("cart_total_items").innerHTML = data['total_item_count'];
                                         document.getElementById("cart_item_count1").innerHTML =data['total_item_count'];  
                                         document.getElementById("cart_item_count2").innerHTML =data['total_item_count'];  
-                                         document.getElementById("cart_total_price1").innerHTML = data['cart_total_price']+ " PKR";
+                                         document.getElementById("cart_total_price1").innerHTML = data['all_total_price']+ " PKR";
                                           document.getElementById("cart_total_price2").innerHTML = data['cart_total_price']+ " PKR";
                                 }
 

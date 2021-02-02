@@ -21222,7 +21222,7 @@ fieldset:disabled a.btn {
 	color: #fff;
 	background-color: #3cc1b1;
 	border-color: #43d2c1;
-	box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08)
+	box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 	border-radius: 20px;
 }
 
@@ -23539,7 +23539,6 @@ fieldset:disabled a.btn {
 	background-clip: border-box;
 	border: 0 solid transparent;
 	border-radius: 0;
-	cursor: pointer;
 }
 
 .card>hr {
@@ -38526,22 +38525,14 @@ body .jqstooltip {
 	}
 
 }
-
-
-
-
-
-
-
-
-
+/* ================================================================================================= */
 /* Home page styling */
 /* product categories styling */
 .products-container{
 	padding: 40px 0 0 0;
 }
 .product-row{
-	margin-right: 11px;
+	margin-right: 4px;
 	margin-left: -9px;
 }
 .categories-heading h2{
@@ -38655,11 +38646,11 @@ body .jqstooltip {
 	padding: 0;
  }
  .contact-detail ul li i{
-		width: 44px;
-		height: 44px;
+		width: 35px;
+		height: 35pxpx;
 		text-align: center;
-		line-height: 44px;
-		font-size: 25px;
+		line-height: 35px;
+		font-size: 16px;
 		color: #ffffff;
 		border-radius: 50%;
 		background-color: #faa15c;
@@ -38668,7 +38659,7 @@ body .jqstooltip {
  }
  .contact-detail span{
 	 color: #b2b3b7;
-	 font-size: 20px;
+	 font-size: 16px;
  }
 /* contact us styling ends here */
 /* ================================================================== */
@@ -38710,8 +38701,8 @@ body .jqstooltip {
 	color:  #231f20;
 }
 .form-wrapper form label{
-	font-size: 17px;
-	color: #6c6d70;
+	font-size: 15px;
+	color: #939598;
 }
 .form-wrapper form input{
 	height: 54px;
@@ -39151,20 +39142,106 @@ border-bottom:  2px solid #93959859;
 .profile-row{
 	padding: 42px !important;
 }
-
 .profile-heading form label, input{
-    color: #939598;
-    font-weight: 500;
+	color: #939598;
+	font-weight: 500;
 }
 
 /* profile ends here */
+/* ============================================================================ */
+/* order history starts here */
+.order-heading h2{
+	/* color: #939598; */
+	margin: 0;
+}
+.white-bg{
+	background-color: #ffffff;
+	padding: 50px;
+	min-height: 550px;
+}
+.history-table table thead tr{
+	background-color: #e6e7e9;
+	border: none;
+}
+.history-table table  thead tr th{
+	border: none;
+	padding: 2px 5px;
+	color: #939598;
+}
+.history-table table tbody td{
+	border-bottom: 2px solid #e6e7e9;
+	padding: 2px 5px;
+	color: #939598;
+}
+.order-history{
+	border-bottom: none;
+}
+/* order history ends here */
+/* ================================================================ */
+/* oder detail starts here */
+/* .history-table table{
+	width: 100%;
+} */
+.order-table table thead tr{
+	background-color: #e6e7e9;
+	border: none;
+}
+.order-table table thead tr th{
+	text-transform: uppercase;
+	border: none;
+	padding: 4px 5px;
+	color: #939598;
+}
+.order-table table tbody td{
+	border-bottom: 2px solid #e6e7e9;
+	color: #939598;
+}
+.order-table table tbody td h4, p{
+	font-size: 14px;
+}
+.order-table table  thead tr:nth-of-type(3){
+	text-align: right;
+}
+/* order history ends here */ 
+/* ==================================================================== */
+/* oder history detail starts here */
+.order-history-detail{
+	border-bottom: none;
+}
+.order-history-detail ul li {
+    padding: 0 5px;
+    font-size: 16px;
+	font-weight: 500;
+}
+.order-heading h3,p{
+	color: #939598;
+	margin: 0;
+}
+.border-dash{
+	line-height: 25px;
+	color:  #939598;
+	border: 2px dashed #939598;
+}
+
+/* order history ends here */
+
+
+
+
+
+
+
+.fav-heading{
+    color: #3DC4B4;
+    font-weight: 500;
+}
+
+
+
+
 /* =========================media query============================== */
 /* Responsive columns */
 @media screen and (max-width: 500px) {
-	.profile-row {   
-		margin: 0;
-	} 
-
 	.link-btn-wrapper span{
 		
 		margin-top: 20px;
@@ -39236,6 +39313,10 @@ border-bottom:  2px solid #93959859;
 	.profile-heading {
 		max-width: 100%;
 	}
+	.white-bg {
+		/* margin: 0; */
+		padding:20px 10px;
+	}
 	/* .text i {
 		position: absolute;
 		top: -408px;
@@ -39273,6 +39354,10 @@ border-bottom:  2px solid #93959859;
 .cart-btns{
 	text-align: left;
 	padding: 0;
+}
+.white-bg {
+	/* margin: 0; */
+	padding: 20px 0;
 }
 }
 @media screen and (max-width: 320px) {
@@ -39341,4 +39426,14 @@ border-bottom:  2px solid #93959859;
 .products-list{
 	border-left: none;
 }
+}
+@media screen and (max-width : 800px){
+	
+	.product-left-bar{
+		display: none;
+	}
+	.products-list {
+		border-left: none;
+		padding: 0;
+	}
 }

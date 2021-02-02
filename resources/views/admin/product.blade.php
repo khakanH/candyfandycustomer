@@ -68,7 +68,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
-                                                    <a class="btn btn-primary" href="javascript:void(0)" onclick='EditProduct("<?php echo $key['id']?>","<?php echo $key['name']?>","<?php echo $key['category_id']?>","<?php echo $key['actual_price']?>","<?php echo $key['sale_price']?>","<?php echo $key['stock']?>","<?php echo $key['description']?>","<?php echo $key['image']?>")'><i class="fa fa-edit tx-15"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-danger" onclick='DeleteProduct("<?php echo $key['id'] ?>")' href="javascript:void(0)"><i class="fa fa-trash tx-15"></i></a>
+                                                    <a class="btn btn-primary" href="javascript:void(0)" onclick='EditProduct("<?php echo $key['id']?>","<?php echo $key['name']?>","<?php echo $key['category_id']?>","<?php echo $key['actual_price']?>","<?php echo $key['sale_price']?>","<?php echo $key['stock']?>","<?php echo $key['description']?>","<?php echo $key['image']?>","<?php echo $key['is_featured']?>")'><i class="fa fa-edit tx-15"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-danger" onclick='DeleteProduct("<?php echo $key['id'] ?>")' href="javascript:void(0)"><i class="fa fa-trash tx-15"></i></a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -120,7 +120,7 @@
 
     }
 
-    function EditProduct(id,name,cate_id,a_price,s_price,stock,description,image)
+    function EditProduct(id,name,cate_id,a_price,s_price,stock,description,image,is_feature)
     {
         document.getElementById('prod_name').value = name;
         document.getElementById('prod_actual_price').value = a_price;
@@ -129,6 +129,18 @@
         document.getElementById('prod_stock').value = stock;
         document.getElementById('product_image_output').src = "{{ config('app.img_url')}}"+image;
         document.getElementById('prod_id').value = id;
+
+        if (is_feature == 1) 
+        {
+            document.getElementById("feature-switch").style.marginLeft = "0px";
+            document.getElementById("prod-is-feature-value").value = 1;
+        }
+        else
+        {
+            document.getElementById("feature-switch").style.marginLeft = "-56px";
+            document.getElementById("prod-is-feature-value").value = 0;
+        }
+
         $('#ProductModal').modal('show');
         $('#ProductModalLabel').html('Edit Product');
 

@@ -36,10 +36,10 @@
                                </div>
                                <div class="contact-detail">
                                     <ul>
-                                        <li class="mb-2"><i class="far fa-envelope"></i><span >candyfandy@gmail.com</span></li>
-                                        <li class="mb-2"><i class="fa fa-phone"></i></i><span >00 0012 1234 34</li>
-                                        <li class="mb-2"><i class="fas fa-globe"></i><span>www.candyfandy.com</span></li>
-                                        <li><i class="fas fa-map-marker-alt"></i><span >Lorem Ipsum dollar odor</span></li>
+                                        <li class="mb-2"><i class="far fa-envelope"></i><span >{{$gs_info['gs_email']}}</span></li>
+                                        <li class="mb-2"><i class="fa fa-phone"></i></i><span >{{$gs_info['gs_phone']}}</li>
+                                        <li class="mb-2"><i class="fas fa-globe"></i><span>{{$gs_info['gs_website']}}</span></li>
+                                        <li><i class="fas fa-map-marker-alt"></i><span >{{$gs_info['gs_location']}}</span></li>
                                     </ul>
                                 </div>
                             </div>

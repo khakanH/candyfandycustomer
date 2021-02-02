@@ -130,7 +130,7 @@
                         
                         <p class="d-flex justify-content-between">
                           <span>Payment Method:</span>
-                          <span>{{$key['payment_type']}}</span>
+                          <span>{{$key->payment_method_name['name']}}</span>
                         </p>
                         <p class="d-flex justify-content-between">
                           <span></span>

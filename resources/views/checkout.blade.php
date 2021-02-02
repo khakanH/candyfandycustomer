@@ -66,8 +66,13 @@
                                 </div>
                                 <div class="payment">
                                     <h4 class="mt-5">2. Payment Method*</h4>
-                                    <input class="radioinput" type="radio" checked="" id="cod" name="payment" value="1">
-                                    <label for="female">&nbsp;Cash on Delivery</label>
+
+                                    @foreach($payment_method as $key)
+                                    <input class="radioinput" type="radio" <?php if ($loop->first): ?>
+                                        checked
+                                    <?php endif ?> id="pay{{$key['id']}}" name="payment" value="{{$key['id']}}">
+                                    <label for="pay{{$key['id']}}">&nbsp;{{$key['name']}}</label><br>
+                                    @endforeach
                                    <div class="mt-4 p-0">
                                     <button class="log-reg-btn">Place Order</button>
                                    </div>
@@ -91,20 +96,20 @@
                                         <div class="mb-2">
                                             <ul>
                                                 <li>Shipping: </li>
-                                                <li style="float: right;">0 PKR</li>
+                                                <li style="float: right;">{{$shipping_discount->shipping_fee}} PKR</li>
                                             </ul>
                                         </div>
                                         <div class="mb-3">
                                             <ul>
                                                 <li>Discount: </li>
-                                                <li style="float: right;">0 PKR</li>
+                                                <li style="float: right;">{{$shipping_discount->discount}} %</li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="amount-qty sub-total mt-3">
                                         <ul>
                                             <li>Sub Total: </li>
-                                            <li style="float: right; color: #231f20;"><b>{{ number_format($cart_info->total_price,1)}} PKR</b></li>
+                                            <li style="float: right; color: #231f20;"><b>{{ number_format($cart_info->all_total,1)}} PKR</b></li>
                                         </ul>
                                         <div class="mt-4 view-cart-link">
                                             <a href="{{route('cart')}}"> View Cart</a>

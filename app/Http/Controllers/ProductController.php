@@ -265,5 +265,55 @@ class ProductController extends Controller
     }
 
 
+    public function FavoriteProduct(Request $request)
+    {
+        try 
+        {   
+
+            $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
+            $cart_id = empty(session("cart_id"))?0:session("cart_id");
+
+            
+            $customer_info = Customer::where('id',$customer_id)->first();
+
+
+            if ($customer_info == "") 
+            {
+              if($request->ajax()) 
+              {
+                return response()->json(['status'=>"0",'msg' => 'Kindly login first to view your favorite items'],401);
+              }
+              else
+              {
+                return redirect()->route('login-form')->with('failed','Kindly login first to view your favorite items');
+              }          
+            }
+
+            $ids = FavoriteProduct::where('customer_id',$customer_id)->pluck('product_id');
+
+            $fav_product = Product::where('stock','>',0)
+                                  ->where('is_show',1)
+                                  ->whereIn('id',$ids)
+                                  ->get();
+
+
+            foreach ($fav_product as $key) 
+            {
+              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+               $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
+            }
+
+
+           
+            return view('favorite_product',compact('fav_product'));
+        } 
+        catch (Exception $e) 
+        {
+            return response()->json($e,500);
+            
+        }
+    }
+
+
 }
     

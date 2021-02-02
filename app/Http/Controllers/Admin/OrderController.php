@@ -207,7 +207,7 @@ class OrderController extends Controller
                         
                         <p class="d-flex justify-content-between">
                           <span>Payment Method</span>
-                          <span><?php echo $key['payment_type'] ?></span>
+                          <span><?php echo $key->payment_method_name['name'] ?></span>
                         </p>
                         <p class="d-flex justify-content-between">
                           <span></span>
@@ -382,7 +382,7 @@ class OrderController extends Controller
                         
                         <p class="d-flex justify-content-between">
                           <span>Payment Method</span>
-                          <span><?php echo $key['payment_type'] ?></span>
+                          <span><?php echo $key->payment_method_name['name'] ?></span>
                         </p>
                         <p class="d-flex justify-content-between">
                           <span></span>
@@ -561,7 +561,7 @@ class OrderController extends Controller
                         
                         <p class="d-flex justify-content-between">
                           <span>Payment Method</span>
-                          <span><?php echo $key['payment_type'] ?></span>
+                          <span><?php echo $key->payment_method_name['name'] ?></span>
                         </p>
                         <p class="d-flex justify-content-between">
                           <span></span>
@@ -739,7 +739,7 @@ class OrderController extends Controller
                         
                         <p class="d-flex justify-content-between">
                           <span>Payment Method</span>
-                          <span><?php echo $key['payment_type'] ?></span>
+                          <span><?php echo $key->payment_method_name['name'] ?></span>
                         </p>
                         <p class="d-flex justify-content-between">
                           <span></span>
@@ -929,7 +929,7 @@ class OrderController extends Controller
                         
                         <p class="d-flex justify-content-between">
                           <span>Payment Method</span>
-                          <span><?php echo $key['payment_type'] ?></span>
+                          <span><?php echo $key->payment_method_name['name'] ?></span>
                         </p>
                         <p class="d-flex justify-content-between">
                           <span></span>
@@ -948,8 +948,6 @@ class OrderController extends Controller
                       <thead style="text-align: center;">
                         <tr>
                             <th class="wd-20p"style="text-align: left;" >Product</th>
-                            <!-- <th class="wd-10p">Price</th> -->
-                            <!-- <th class="wd-10p">Quantity</th> -->
                             <th class="wd-10p">SubTotal</th>
                         </tr>
                     </thead>
@@ -961,8 +959,7 @@ class OrderController extends Controller
                            &nbsp;<?php echo $key_['product_name'] ?>
                           <br>
                         </td>
-                        <!-- <td style="vertical-align: middle;"><?php echo $key_['restaurant_product_price'] ?></td> -->
-                        <!-- <td style="vertical-align: middle;"><?php echo $key_['quantity'] ?></td> -->
+                        
                         <td style="vertical-align: middle;"><?php echo $key_['subtotal'] ?></td>
                     </tr>
 

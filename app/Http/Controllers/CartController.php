@@ -12,6 +12,11 @@ use App\Models\Orders;
 use App\Models\OrderDetails;
 use App\Models\Cart;
 use App\Models\CartDetail;
+
+
+use App\Models\GeneralSetting;
+
+
 use File;
 use DB;
 
@@ -31,6 +36,9 @@ class CartController extends Controller
 
           $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
           $cart_id = empty(session("cart_id"))?0:session("cart_id");
+
+
+          $shipping_discount =GeneralSetting::first();
 
 
           $cart = Cart::where('id',$cart_id)->first(); 
@@ -55,9 +63,11 @@ class CartController extends Controller
             }
 
           }
+
+          $cart->all_total = ($cart->total_price + $shipping_discount->shipping_fee) - ($cart->total_price * ($shipping_discount->discount/100) ) ;
           // dump($cart_detail);
           // exit();
-          return view('cart',compact('cart','cart_detail'));
+          return view('cart',compact('cart','cart_detail','shipping_discount'));
         } 
         catch (Exception $e) 
         {
@@ -184,6 +194,8 @@ class CartController extends Controller
           $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
           $cart_id = empty(session("cart_id"))?0:session("cart_id");
 
+          $shipping_discount =GeneralSetting::first();
+
           $get_prod = Product::where('id',$prod_id)->where('is_show',1)->where('stock','>',$qty)->first();
 
           if ($get_prod == "") 
@@ -210,7 +222,9 @@ class CartController extends Controller
                                               ));
 
 
-          return array("status"=>"1","msg"=>"Item Quantity Updated","product_count"=>$qty,"cart_total_price"=>$cart_total_price,"cart_item_subtotal"=>$get_prod->sale_price*$qty);
+           $all_total = ($cart_total_price + $shipping_discount->shipping_fee) - ($cart_total_price * ($shipping_discount->discount/100));
+
+          return array("status"=>"1","msg"=>"Item Quantity Updated","product_count"=>$qty,"cart_total_price"=>$cart_total_price,"cart_item_subtotal"=>$get_prod->sale_price*$qty,'all_total_price'=>$all_total);
 
 
         
@@ -322,6 +336,7 @@ class CartController extends Controller
           $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
           $cart_id = empty(session("cart_id"))?0:session("cart_id");
 
+          $shipping_discount =GeneralSetting::first();
           
           if (CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->delete()) 
           {
@@ -331,7 +346,12 @@ class CartController extends Controller
 
               $request->session()->put("cart_total_item",count($new_cart_detail));
 
-          return array("status"=>"1","msg"=>"Item Deleted.","total_item_count"=>count($new_cart_detail),"cart_total_price"=>$new_cart_detail->sum('product_subtotal'));
+              $cart_total_price =$new_cart_detail->sum('product_subtotal');
+
+            $all_total = ($cart_total_price + $shipping_discount->shipping_fee) - ($cart_total_price * ($shipping_discount->discount/100));
+
+
+          return array("status"=>"1","msg"=>"Item Deleted.","total_item_count"=>count($new_cart_detail),"cart_total_price"=>$cart_total_price,'all_total_price'=>$all_total);
 
 
           }

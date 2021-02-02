@@ -121,6 +121,23 @@
                             <label>Stock: </label>
                             <input type="number" id="prod_stock" name="prod_stock" class="form-control" placeholder="Enter Product Stock">
                             </div>
+                            <div class="col-lg-6">
+                            <label>Is Featured: </label>
+                              <br>
+                               <input type="hidden" name="is_featured" id="prod-is-feature-value" value="0">
+                              <div onclick="ChangeItemFeature()" class="bootstrap-switch-mini bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-animate bootstrap-switch-off" style="width: 110px; height: 34px;">
+                                                        <div id="feature-switch" class="bootstrap-switch-container" style="width: 164px;
+                                                          margin-left: -56px;
+                                                         ">
+                                                            <span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 58px; height: 33px;">ON</span>
+                                                            <span class="bootstrap-switch-label" style="width: 58px; height: 33px;">&nbsp;</span>
+                                                            <span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 58px; height: 33px;">OFF</span>
+                                                            <input type="checkbox" checked="" data-size="mini">
+                                                        </div>
+                                                    </div>
+
+
+                            </div>
                         </div>
                         <br>
                         <div class="row">
@@ -285,6 +302,54 @@
 <!-- ----------------------------------------------------------------------------------------------------- -->
 <!-- ----------------------------------------------------------------------------------------------------- -->
 
+<!-- Payment Modal                                         -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
+
+<div id="PaymentModal" class="modal fade show " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-modal="true" aria-hidden="true" style="color: black;">
+    <div class="modal-dialog" id="PaymentModalDialog">
+        <div class="modal-content" id="PaymentModalContent">
+           
+            <form name="paymentForm" enctype="multipart/form-data" id="paymentForm">
+              @csrf
+               <span class='arrow'>
+              <label class='error'></label>
+              </span>
+                  <div class="modal-header">
+                      <h4 class="modal-title" id="PaymentModalLabel"></h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="" id="PaymentModalData">
+
+                      <input type="hidden" id="payment_id" name="payment_id">
+
+
+                        
+                        <div class="form-group">
+                          <input type="text" id="payment_name" name="payment_name" class="form-control" placeholder="Enter Payment Name">
+                        </div>
+                                
+                      </div>
+              
+
+                      </div>
+                  <div class="modal-footer" id="PaymentModalFooter">
+                      <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-info ">Save</button>
+
+                  </div>
+            </form>
+
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
 
 
 <script type="text/javascript">
@@ -715,6 +780,102 @@
 // ----------------------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------
+$(function() {
+        $("form[name='paymentForm']").validate({
+             errorPlacement: function(label, element) {
+        label.addClass('arrow');
+        label.css({"color": "red", "font-size": "12px" ,"width":"100%"});
+        label.insertAfter(element);
+    },
+    wrapper: 'span',
+
+    rules: {
+      payment_name: {
+        required: true,
+      },
+    },
+    messages: {
+      payment_name: {
+        required: "Please Provide a Payment Name",
+      },
+     
+    },
+    submitHandler: function(form) {
+
+        let myForm = document.getElementById('paymentForm');
+        let formData = new FormData(myForm);
+
+         $.ajax({
+        type: "POST",
+        url: "{{ config('app.url')}}admin/add-update-payment-method",
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false,
+        contentType: false,
+        beforeSend: function(){
+                            $('#PaymentModal').modal('hide');
+                        },
+        success: function(data) {
+           
+
+            get_status = data['status'];
+            get_msg    = data['msg'];
+
+                            if (get_status == "0") 
+                            {
+
+                             document.getElementById('toast').style.visibility = "visible";
+                                document.getElementById('toast').className = "alert alert-danger alert-rounded fadeIn animated";
+                                document.getElementById('toastMsg').innerHTML = get_msg;
+
+
+                                 setTimeout(function() {
+                             document.getElementById('toast').style.visibility = "hidden";
+                                
+
+                            }, 5000);
+
+                            }
+                            else
+                            {
+                                document.getElementById('toast').style.visibility = "visible";
+                                document.getElementById('toast').className = "alert alert-success alert-rounded fadeIn animated";
+                                document.getElementById('toastMsg').innerHTML = get_msg;
+
+
+                                 setTimeout(function() {
+                             document.getElementById('toast').style.visibility = "hidden";
+
+                            }, 5000);
+
+
+                            }
+
+
+        $.ajax({
+        type: "GET",
+        url: "{{ config('app.url')}}admin/get-payment-method-list-AJAX",
+        success: function(data) {
+
+            $('#paymentTBody').html(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Exception:' + errorThrown);
+        }
+    });
+
+    }
+  });
+
+    }
+  });
+  });
+
+
+
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 
 
 var product_loadFile = function(event) {
@@ -724,4 +885,21 @@ var product_loadFile = function(event) {
       URL.revokeObjectURL(product_image_output.src) // free memory
     }
   };
+
+
+  function ChangeItemFeature()
+  {
+    var val = document.getElementById("prod-is-feature-value").value;
+
+        if (val == 1) 
+        {
+            document.getElementById("feature-switch").style.marginLeft = "-56px";
+            document.getElementById("prod-is-feature-value").value = 0;
+        }
+        else
+        {
+            document.getElementById("feature-switch").style.marginLeft = "0px";
+            document.getElementById("prod-is-feature-value").value = 1;
+        }
+  }
 </script>

@@ -14,4 +14,8 @@ class Orders extends Model
  	public function order_details(){
         return $this->hasMany('App\Models\OrderDetails','order_id','id');
     }
+
+    public function payment_method_name(){
+        return $this->hasOne('App\Models\PaymentMethod','id','payment_type');
+    }
 }

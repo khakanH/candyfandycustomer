@@ -13,7 +13,7 @@
 
 
         <header class="most-topbar">
-            <span class="mtb-left"><a class="text-white" href="tel:000 0123 1234">000 0123 1234</a></span>
+            <span class="mtb-left"><a class="text-white" href="tel:{{$gs_info['gs_phone']}}">{{$gs_info['gs_phone']}}</a></span>
             <span class="mtb-right text-white">
                 <i class="fas fa-user"></i> 
                 &nbsp;
@@ -79,6 +79,12 @@
                             </div>
 
                         </li> -->
+                        @if(session('login'))
+                        <li class="nav-item d-flex header-search">
+                                
+                               <a href="{{route('favorite_products')}}"><i class="fa fa-heart" style="font-size: 25px; padding: 4px; color: darkgray;"></i></a>
+                        </li>
+                        @endif
 
                         <li class="nav-item dropdown">
                             <div class="columns columns-right btn-group float-right" style="width: 100%;" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="ShowCartDetails()">
