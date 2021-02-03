@@ -72,6 +72,7 @@
         
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}add-to-cart/"+prod_id,
          beforeSend: function(){
                             $('#LoadingModal').modal('show');
@@ -124,6 +125,7 @@
 
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}change-cart-item-qty/"+prod_id+"/"+qty,
          beforeSend: function(){
                             $('#LoadingModal').modal('show');
@@ -166,6 +168,7 @@
 
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}mark-item-favorite/"+prod_id,
         beforeSend: function(){
                             $('#LoadingModal').modal('show');

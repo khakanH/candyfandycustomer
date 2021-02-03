@@ -14,6 +14,9 @@ use App\Models\Product;
 use DB;
 use File;
 
+
+use Image;
+
 class InventoryController extends Controller
 {
 
@@ -288,9 +291,13 @@ class InventoryController extends Controller
 
                     $input['imagename'] =  uniqid().'.webp';
                    
-                    $destinationPath = public_path('/assets/images/product');
+                    $destinationPath = public_path('/assets/images/product/'.$input['imagename']);
 
-                    if($image->move($destinationPath, $input['imagename']))
+                    $image_resize = Image::make($image->getRealPath());   
+                    
+                    $image_resize->resize(500, 500);     
+                    
+                    if($image_resize->save($destinationPath))
                     {
                             $path =  'product/'.$input['imagename'];
                     }
@@ -352,9 +359,13 @@ class InventoryController extends Controller
 
                     $input['imagename'] =  uniqid().'.webp';
                    
-                    $destinationPath = public_path('/assets/images/product');
+                    $destinationPath = public_path('/assets/images/product/'.$input['imagename']);
 
-                    if($image->move($destinationPath, $input['imagename']))
+                    $image_resize = Image::make($image->getRealPath());   
+                    
+                    $image_resize->resize(500, 500);     
+                    
+                    if($image_resize->save($destinationPath))
                     {
                             $path =  'product/'.$input['imagename'];
                     }

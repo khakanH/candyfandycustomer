@@ -67,7 +67,7 @@
                                                 <center><img class="rounded-circle card-img-top"
                                                 src="{{config('app.img_url')}}{{$key['icon']}}" style="width: 110px; height: 110px;" alt="Card image cap"></center>
                                                 <div class="text-center mt-2">
-                                                    <p class="card-text">{{$key['name']}}</p>
+                                                    <p class="card-text">{{ucfirst($key['name'])}}</p>
                                                 </div>
                                                 </div>
                                             
@@ -355,6 +355,7 @@
 
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}add-to-cart/"+prod_id,
         beforeSend: function(){
                             $('#LoadingModal').modal('show');
@@ -429,6 +430,7 @@
         
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}change-cart-item-qty/"+prod_id+"/"+qty,
         beforeSend: function(){
                             $('#LoadingModal').modal('show');
@@ -507,6 +509,7 @@
 
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}mark-item-favorite/"+prod_id,
         beforeSend: function(){
                             $('#LoadingModal').modal('show');

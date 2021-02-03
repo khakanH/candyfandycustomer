@@ -146,6 +146,7 @@
         {
             $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}get-cart-details",
              beforeSend: function(){
                             },

@@ -131,6 +131,7 @@
    {
       $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}admin/get-user-roles-AJAX/"+val,
         beforeSend: function(){
                             $('#LoadingModal').modal('show');
@@ -179,6 +180,7 @@
 
          $.ajax({
         type: "POST",
+        cache: false,
         url: "{{ config('app.url')}}admin/save-roles",
         enctype: 'multipart/form-data',
         data: formData,

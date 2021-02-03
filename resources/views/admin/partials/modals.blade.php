@@ -381,6 +381,7 @@
 
          $.ajax({
         type: "POST",
+        cache: false,
         url: "{{ config('app.url')}}admin/add-update-category",
         enctype: 'multipart/form-data',
         data: formData,
@@ -428,6 +429,7 @@
 
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}admin/get-category-list-AJAX",
         success: function(data) {
 
@@ -507,6 +509,7 @@
 
          $.ajax({
         type: "POST",
+        cache: false,
         url: "{{ config('app.url')}}admin/add-update-product",
         enctype: 'multipart/form-data',
         data: formData,
@@ -553,6 +556,7 @@
 
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}admin/get-product-list-AJAX",
         success: function(data) {
 
@@ -601,6 +605,7 @@
 
          $.ajax({
         type: "POST",
+        cache: false,
         url: "{{ config('app.url')}}admin/add-update-user-type",
         enctype: 'multipart/form-data',
         data: formData,
@@ -648,6 +653,7 @@
 
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}admin/get-user-type-list-AJAX",
         success: function(data) {
 
@@ -711,6 +717,7 @@
 
          $.ajax({
         type: "POST",
+        cache: false,
         url: "{{ config('app.url')}}admin/add-update-user",
         enctype: 'multipart/form-data',
         data: formData,
@@ -758,6 +765,7 @@
 
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}admin/get-user-list-AJAX",
         success: function(data) {
 
@@ -807,6 +815,7 @@ $(function() {
 
          $.ajax({
         type: "POST",
+        cache: false,
         url: "{{ config('app.url')}}admin/add-update-payment-method",
         enctype: 'multipart/form-data',
         data: formData,
@@ -854,6 +863,7 @@ $(function() {
 
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}admin/get-payment-method-list-AJAX",
         success: function(data) {
 

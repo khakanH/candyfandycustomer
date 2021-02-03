@@ -124,6 +124,7 @@
 
             $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/change-category-availability/"+id+"/"+switch_val,
             success: function(data) {
                 
@@ -180,6 +181,7 @@
 
         $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/delete-category/" + id,
             success: function(data) {
                 

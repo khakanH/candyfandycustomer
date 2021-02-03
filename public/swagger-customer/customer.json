@@ -21,6 +21,10 @@
       "description": "Everything about Customer Account",
     },
     {
+      "name": "Home",
+      "description": "Everything about Customer Home Screen",
+    },
+    {
       "name": "Test",
       "description": "Everything about Test Methods and Development",
     },
@@ -96,7 +100,131 @@
     },
 
 
+    "/get_products": {
+      "get": {
+        "tags": [
+          "Home"
+        ],
+        "summary": "All Products list on home screen",
+        "description": "",
+        "operationId": "AllProducts",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
 
+
+    "/search_products": {
+      "post": {
+        "tags": [
+          "Home"
+        ],
+        "summary": "Search Product on Home Screen",
+        "description": "",
+        "operationId": "SearchProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "type": "object",
+                        "properties": {
+                          "search_text": {
+                                          "type": "string",
+                                          "example": "Candy",
+                                          "required": true
+                                  },
+                         
+                        }
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+    "/get_product_details": {
+      "post": {
+        "tags": [
+          "Home"
+        ],
+        "summary": "Product Details",
+        "description": "",
+        "operationId": "ProductDetails",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "type": "object",
+                        "properties": {
+                          "product_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                         
+                        }
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
 
 
 

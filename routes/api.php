@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AccountController;
+use App\Http\Controllers\API\ProductController;
 
 
 /*
@@ -19,3 +20,12 @@ use App\Http\Controllers\API\AccountController;
 
 Route::post('login',[AccountController::class, 'Login']);
 Route::post('signup',[AccountController::class, 'Signup']);
+
+
+
+Route::middleware(['CheckToken'])->group(function () 
+{
+	Route::get('get_products',[ProductController::class, 'Index']);
+	Route::post('search_products',[ProductController::class, 'SearchProduct']);
+	Route::post('get_product_details',[ProductController::class, 'ProductDetail']);
+});

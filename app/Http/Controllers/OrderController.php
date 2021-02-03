@@ -193,5 +193,169 @@ class OrderController extends Controller
     
 
 
+
+    public function OrderHistory(Request $request)
+    { 
+      try 
+        {
+          $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
+
+          $customer_info = Customer::where('id',$customer_id)->first();
+
+          if ($customer_info == "") 
+          {
+            if($request->ajax()) 
+            {
+              return response()->json(['status'=>"0",'msg' => 'Kindly login first to view your order history'],401);
+            }
+            else
+            {
+              return redirect()->route('login-form')->with('failed','Kindly login first to view your order history');
+            }          
+          }
+
+          $orders = Orders::where('customer_id',$customer_id)->orderBy('created_at','desc')->get();
+            
+            
+
+            return view('order_history',compact('orders'));
+          
+        } 
+        catch (Exception $e) 
+        {
+            return response()->json($e,500);
+        }
+    }
+
+    public function OrderHistoryDetails(Request $request,$id)
+    { 
+      try 
+        {
+          $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
+
+          $customer_info = Customer::where('id',$customer_id)->first();
+
+          if ($customer_info == "") 
+          {
+            if($request->ajax()) 
+            {
+              return response()->json(['status'=>"0",'msg' => 'Kindly login first to view your order history details'],401);
+            }
+            else
+            {
+              return redirect()->route('login-form')->with('failed','Kindly login first to view your order history details');
+            }          
+          }
+
+            $order = Orders::where('id',$id)->first();
+            
+            if ($order == "") 
+            {
+              ?>
+              <center><p>No order detail found :(</p></center>
+              <?php 
+              return;
+            }
+
+            if ($order->order_status == 1) 
+            {
+              $status_name = "New Order";
+            }
+            elseif ($order->order_status == 2)
+            {
+              $status_name = "Accepted";
+            }
+            elseif ($order->order_status == 3)
+            {
+              $status_name = "Ongoing";
+            }
+            elseif ($order->order_status == 4)
+            {
+              $status_name = "Completed";
+            }
+            elseif ($order->order_status == 5)
+            {
+              $status_name = "Rejected";
+            }
+            else
+            {
+              $status_name = "-";
+            }
+
+
+            $order_item = OrderDetails::where('order_id',$id)->get();
+
+            ?>
+            <div class="order-history order-heading ">
+                                    <p>Order #<?php echo $order->order_number ?> was placed on <?php echo date('F d, Y h:i A',strtotime($order->created_at))?> and is currently <?php echo $status_name; ?></p>
+                                    <div class="order-table mt-4" style="overflow-x:auto;">
+                                        <table class="table w-100 ">
+                                            <thead>
+                                              <tr>
+                                                <th>Product</th>
+                                                <th>QTY</th>
+                                                <th class="text-right">Total</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <?php foreach($order_item as $key): ?> 
+                                              <tr>
+                                                <td>
+                                                    <h4 class="p-0 m-0"> <?php echo $key['product_name'] ?></h4>
+                                                </td>
+                                                <td><?php echo $key['quantity'] ?></td>
+                                                <td class="text-right">RS <?php echo $key['subtotal'] ?></td>
+                                              </tr>
+                                              <?php endforeach;?>
+                                              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="amount-qty order-history-detail order-history-content mb-1"> 
+                                        <div class="mb-2">
+                                            <ul>
+                                                <li>Shipping: </li>
+                                                <li style="float: right;"><?php echo $order->delivery_fee ?> PKR</li>
+                                            </ul>
+                                        </div>
+                                        <div class="mb-2">
+                                            <ul>
+                                                <li>Discount: </li>
+                                                <li style="float: right;"><?php echo $order->discount ?> PKR</li>
+                                            </ul>
+                                        </div>
+                                        <div class="mb-3">
+                                            <ul>
+                                                <li>Sub Total: </li>
+                                                <li style="float: right; color: #3dc4b4;"><?php echo $order->total_paid_amount ?> PKR</li>
+                                            </ul>
+                                        </div>
+                                    </div> 
+                                    <hr>
+                                    <div class="row">
+                                        
+                                        <div class="col-md-12 px-4 py-2">
+                                            <h3 class="pb-2">
+                                                Shipping Address
+                                            </h3>
+                                            <div class="border-dash p-4">
+                                                <p class="m-0">Name: <?php echo $order->customer_name; ?></p>
+                                                <p class="m-0">Phone: <?php echo $order->customer_phone; ?></p>
+                                                <p class="m-0">Address: <?php echo $order->delivery_address; ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                              </div>
+
+            <?php
+            
+          
+        } 
+        catch (Exception $e) 
+        {
+            return response()->json($e,500);
+        }
+    }
+
 }
     

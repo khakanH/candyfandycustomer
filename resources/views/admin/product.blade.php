@@ -108,6 +108,7 @@
 
          $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}admin/get-category-name-list/"+cate_id,
         success: function(data) {
 
@@ -152,6 +153,7 @@
 
          $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}admin/get-category-name-list/"+cate_id,
         success: function(data) {
 
@@ -183,6 +185,7 @@
 
             $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/change-product-availability/"+id+"/"+switch_val,
             success: function(data) {
                 
@@ -239,6 +242,7 @@
 
         $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/delete-product/" + id,
             success: function(data) {
                 

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\Product;
 use App\Models\Orders;
 use App\Models\OrderDetails;
 
@@ -90,6 +91,15 @@ class OrderController extends Controller
             $user_id = session("admin_login.user_id");
 
             $user_info = $this->checkUserAvailbility($user_id,$request);
+
+            $get_order_item = OrderDetails::where('order_id',$id)->get();
+
+            foreach ($get_order_item as $key) 
+            {
+                $prod = Product::where('id',$key['product_id'])->first();
+                Product::where('id',$key['product_id'])->update(array('stock'=>$prod->stock - $key['quantity']));
+            }
+
 
             $orders = Orders::where('id',$id)->update(array('order_status'=>4,'completed_time'=>date('Y-m-d H:i:s')));
 

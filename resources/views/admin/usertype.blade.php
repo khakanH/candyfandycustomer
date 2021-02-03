@@ -98,6 +98,7 @@
 
         $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/delete-user-type/" + id,
             success: function(data) {
                 

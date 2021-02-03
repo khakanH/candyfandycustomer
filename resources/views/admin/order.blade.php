@@ -268,6 +268,7 @@
 
             $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/get-new-order",
             beforeSend: function(){
             
@@ -288,6 +289,7 @@
     {
       $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/accept-order/"+id,
             beforeSend: function(){
             
@@ -307,6 +309,7 @@
     {
       $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/reject-order/"+id,
             beforeSend: function(){
             
@@ -326,6 +329,7 @@
     {
       $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/complete-order/"+id,
             beforeSend: function(){
             
@@ -345,6 +349,7 @@
     {
       $.ajax({
                   type: "GET",
+                  cache: false,
                   url: "{{ config('app.url')}}admin/get-accepted-order",
                   beforeSend: function(){
                   
@@ -364,6 +369,7 @@
     {
       $.ajax({
                   type: "GET",
+                  cache: false,
                   url: "{{ config('app.url')}}admin/get-completed-order",
                   beforeSend: function(){
                   
@@ -382,6 +388,7 @@
     {
       $.ajax({
                   type: "GET",
+                  cache: false,
                   url: "{{ config('app.url')}}admin/get-rejected-order",
                   beforeSend: function(){
                   
@@ -412,6 +419,7 @@
         document.getElementById("OrderListDiv").style.display= "none";
         $.ajax({
                   type: "GET",
+                  cache: false,
                   url: "{{ config('app.url')}}admin/search-order/"+val,
                   beforeSend: function(){
                   

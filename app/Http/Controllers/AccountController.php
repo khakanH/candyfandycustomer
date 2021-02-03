@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Cart;
 use App\Models\CartDetail;
+use App\Models\Orders;
+use App\Models\OrderDetails;
+
 
 use File;
 
@@ -269,9 +272,11 @@ class AccountController extends Controller
             }          
           }
 
+
+          $orders = Orders::where('customer_id',$customer_id)->orderBy('created_at','desc')->limit(13)->get();
           
 
-          return view('profile',compact('customer_info'));
+          return view('profile',compact('customer_info','orders'));
         } 
         catch (Exception $e) 
         {

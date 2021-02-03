@@ -130,6 +130,7 @@
 
             $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/change-payment-method-availability/"+id+"/"+switch_val,
             success: function(data) {
                 

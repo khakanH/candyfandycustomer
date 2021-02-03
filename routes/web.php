@@ -35,10 +35,21 @@ use App\Models\Modules;
 */
 
 
+Route::get('/clear-cache', function() {
+   \Artisan::call('cache:clear');
+   \Artisan::call('config:cache');
+   \Artisan::call('config:clear');
+   \Artisan::call('view:clear');
+   \Artisan::call('route:clear');
+});
+
+
+
 
 Route::get('/refresh', function(Request $request)
 {
 	$request->session()->flush(); 
+
 });
 
 
@@ -93,6 +104,8 @@ Route::get('profile',[AccountController::class, 'Profile'])->name('profile');
 Route::post('save-profile',[AccountController::class, 'SaveProfile'])->name('save-profile');
 
 Route::get('favorite_products',[ProductController::class, 'FavoriteProduct'])->name('favorite_products');
+Route::get('order_history',[OrderController::class, 'OrderHistory'])->name('order_history');
+Route::get('get-order-details/{id}',[OrderController::class, 'OrderHistoryDetails'])->name('get-order-details');
 
 
 

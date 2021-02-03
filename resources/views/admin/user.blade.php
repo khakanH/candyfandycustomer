@@ -105,6 +105,7 @@
 
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}admin/get-user-type-name-list/"+user_type,
         success: function(data) {
 
@@ -134,6 +135,7 @@
 
         $.ajax({
         type: "GET",
+        cache: false,
         url: "{{ config('app.url')}}admin/get-user-type-name-list/"+user_type,
         success: function(data) {
 
@@ -157,6 +159,7 @@
 
         $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/delete-user/" + id,
             success: function(data) {
                 
@@ -212,6 +215,7 @@
 
         $.ajax({
             type: "GET",
+            cache: false,
             url: "{{ config('app.url')}}admin/block-unblock-user/" + id,
             success: function(data) {
                 
