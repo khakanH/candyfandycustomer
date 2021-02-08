@@ -36,10 +36,13 @@
                                </div>
                                <div class="contact-detail">
                                     <ul>
-                                        <li class="mb-2"><i class="far fa-envelope"></i><span >{{$gs_info['gs_email']}}</span></li>
-                                        <li class="mb-2"><i class="fa fa-phone"></i></i><span >{{$gs_info['gs_phone']}}</li>
-                                        <li class="mb-2"><i class="fas fa-globe"></i><span>{{$gs_info['gs_website']}}</span></li>
-                                        <li><i class="fas fa-map-marker-alt"></i><span >{{$gs_info['gs_location']}}</span></li>
+                                        <li class="mb-2"><i class="far fa-envelope"></i><span>
+                                            <a href="mailto:{{$gs_info['gs_email']}}">{{$gs_info['gs_email']}}</a></span></li>
+                                        <li class="mb-2"><i class="fa fa-phone"></i></i><span >
+                                            <a href="tel:{{$gs_info['gs_phone']}}">{{$gs_info['gs_phone']}}</a></li>
+                                        <li class="mb-2"><i class="fas fa-globe"></i><span>
+                                            <a href="http://{{$gs_info['gs_website']}}" target="_blank">{{$gs_info['gs_website']}}</a></span></li>
+                                        <li><i class="fas fa-map-marker-alt"></i><span ><a href="#">{{$gs_info['gs_location']}}</a></span></li>
                                     </ul>
                                 </div>
                             </div>

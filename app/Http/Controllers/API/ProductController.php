@@ -44,7 +44,7 @@ class ProductController extends Controller
             $cart_id = Cart::where('customer_id',$customer_id)->first()->id;
 
 
-            $select_object = ['id','name','sale_price','image'];
+            $select_object = ['id','name','sale_price','image','description'];
 
 
 
@@ -76,6 +76,7 @@ class ProductController extends Controller
 
             foreach ($featured_product as $key) 
             {
+              $key['description'] = (string)$key['description'];
               $key['image'] = config('app.img_url').$key['image'];
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
@@ -83,6 +84,7 @@ class ProductController extends Controller
 
             foreach ($best_selling_products as $key) 
             {
+              $key['description'] = (string)$key['description'];
               $key['image'] = config('app.img_url').$key['image'];
 
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
@@ -91,8 +93,8 @@ class ProductController extends Controller
 
             foreach ($all_product as $key) 
             {
+              $key['description'] = (string)$key['description'];
               $key['image'] = config('app.img_url').$key['image'];
-
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
@@ -130,7 +132,7 @@ class ProductController extends Controller
 
           $input = $request->all();
           
-          $select_object = ['id','name','sale_price','image'];
+          $select_object = ['id','name','sale_price','image','description'];
 
 
           $all_product = Product::select($select_object)->where('stock','>',0)
@@ -145,9 +147,12 @@ class ProductController extends Controller
 
             foreach ($all_product as $key) 
             {
+
+              $key['description'] = (string)$key['description'];
               $key['image'] = config('app.img_url').$key['image'];
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
+
             }
 
             if (count($all_product) > 0) 
@@ -210,11 +215,17 @@ class ProductController extends Controller
 
 
 
-    public function MarkItemFavorite(Request $request,$prod_id)
+    public function MarkItemFavorite(Request $request)
     {
         try 
         {   
-            $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
+          
+          $customer_id = $this->common_helper->getCustomerID($request);
+          $cust_info = $this->checkCustomerAvailbility($customer_id);
+
+          $input = $request->all();
+
+          $prod_id = $input['product_id'];
 
             if (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$prod_id)->count() == 0) 
             {
@@ -226,15 +237,16 @@ class ProductController extends Controller
                                       ));
 
               $toggle = 1; 
+              $msg = "Product Marked Favorite Successfully.";
             }
             else
             {
               FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$prod_id)->delete();
               $toggle = 0;
+              $msg = "Product Marked Unfavorite Successfully.";
             }
 
-            return array("status"=>"1","msg"=>"Success","toggle"=>$toggle);
-
+            return response()->json(array("status"=>"1","msg"=>$msg,"result"=>$toggle), 200);
            
         } 
         catch (Exception $e) 
@@ -250,28 +262,17 @@ class ProductController extends Controller
         try 
         {   
 
-            $customer_id = empty(session("login.customer_id"))?0:session("login.customer_id");
-            $cart_id = empty(session("cart_id"))?0:session("cart_id");
+          $customer_id = $this->common_helper->getCustomerID($request);
+          $cust_info = $this->checkCustomerAvailbility($customer_id);
 
+          $input = $request->all();
+
+          $cart_id = $input['cart_id'];
             
-            $customer_info = Customer::where('id',$customer_id)->first();
-
-
-            if ($customer_info == "") 
-            {
-              if($request->ajax()) 
-              {
-                return response()->json(['status'=>"0",'msg' => 'Kindly login first to view your favorite items'],401);
-              }
-              else
-              {
-                return redirect()->route('login-form')->with('failed','Kindly login first to view your favorite items');
-              }          
-            }
 
             $ids = FavoriteProduct::where('customer_id',$customer_id)->pluck('product_id');
 
-            $fav_product = Product::where('stock','>',0)
+            $fav_product = Product::select(['id','name','sale_price','image','description'])->where('stock','>',0)
                                   ->where('is_show',1)
                                   ->whereIn('id',$ids)
                                   ->get();
@@ -279,13 +280,16 @@ class ProductController extends Controller
 
             foreach ($fav_product as $key) 
             {
+              $key['description'] = (string)$key['description'];
+              $key['image'] = config('app.img_url').$key['image'];
               $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
+              
             }
 
 
            
-            return view('favorite_product',compact('fav_product'));
+            return response()->json(array("status"=>"1","msg"=>"Favorite Product List.","result"=>$fav_product), 200);
         } 
         catch (Exception $e) 
         {
@@ -293,6 +297,9 @@ class ProductController extends Controller
             
         }
     }
+
+
+
 
 
     

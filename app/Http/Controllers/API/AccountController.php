@@ -9,16 +9,25 @@ use App\Models\Customer;
 use App\Models\CustomerToken;
 use App\Models\Cart;
 use App\Models\CartDetail;
+use App\Models\Orders;
+use App\Models\OrderDetails;
+
 
 use File;
+
+use App\Helpers\ApiHelper;
+
+
+
 
 class AccountController extends Controller
 {
 
+    protected $common_helper;
 
     public function __construct(Request $request)
     {
-
+        $this->common_helper                = new ApiHelper();
     }
 
 
@@ -264,7 +273,66 @@ class AccountController extends Controller
 
 
 
+     public function Profile(Request $request)
+    {   
+      try 
+        {
+            $customer_id = $this->common_helper->getCustomerID($request);
+            $cust_info = $this->checkCustomerAvailbility($customer_id);
+         
+            $input = $request->all();
 
+
+            $cust_info =  array( 
+                            'name'      =>(string)$cust_info->name,
+                            'email'     =>(string)$cust_info->email,
+                            'address'   =>(string)$cust_info->address,
+                            'phone'     =>(string)$cust_info->phone,
+                        );
+
+            $orders = Orders::select(['id','order_number','created_at','order_status','total_paid_amount'])->where('customer_id',$customer_id)->orderBy('created_at','desc')->get();
+            
+            foreach ($orders as $key) 
+            {
+                if ($key['order_status'] == 1) 
+                {
+                  $key['order_status'] = "New Order";
+                }
+                elseif ($key['order_status'] == 2)
+                {
+                  $key['order_status'] = "Accepted";
+                }
+                elseif ($key['order_status'] == 3)
+                {
+                  $key['order_status'] = "Ongoing";
+                }
+                elseif ($key['order_status'] == 4)
+                {
+                  $key['order_status'] = "Completed";
+                }
+                elseif ($key['order_status'] == 5)
+                {
+                  $key['order_status'] = "Rejected";
+                }
+                else
+                {
+                  $key['order_status'] = "-";
+                }
+
+
+                $key['date'] = date("d-M-Y",strtotime($key['created_at']));
+                unset($key['created_at']);
+            }
+
+            $result = array('customer_info'=>$cust_info,'orders'=>$orders);
+
+          return response()->json(array("status"=>"1","msg"=>"Profile Info.","result" => $result), 200);
+        } 
+        catch (Exception $e) 
+        {
+            return response()->json($e,500);
+        }
+    }
 
 
 
@@ -285,6 +353,22 @@ class AccountController extends Controller
         return redirect()->route('login-form');
     }
 
+
+
+     public function checkCustomerAvailbility($id)
+    {
+        $cust = Customer::where('id',$id)->first();
+
+        if ($cust == "") 
+        {
+            echo json_encode(array("status"=>"0","msg"=>"Customer Not Found"), 200); 
+            exit();
+        }
+        else
+        {
+            return $cust;
+        }
+    }
 
 }
     

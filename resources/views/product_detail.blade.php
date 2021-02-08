@@ -43,11 +43,15 @@
                                         <span >{{$product->sale_price}}/- PKR</span>
                                     </li> 
                                     <li class="pt-2 product-detail-price">
-                                        <span >QTY:&nbsp; &nbsp;</span>
-                                        <span ><input onchange='ChangeCartItemQty(this.value,"{{$product->id}}")' type="number" min="1" step="1" name="qty" id="cart_item_qty" value="{{$product->cart_count}}">
+                                       
+                                        <span id="item_qty_span" style="<?php if ($product->cart_count == 0): ?>
+                                            visibility: hidden;
+                                        <?php endif ?> ">QTY:&nbsp; &nbsp;
+                                        <input onchange='ChangeCartItemQty(this.value,"{{$product->id}}")' type="number" min="1" step="1" name="qty" id="cart_item_qty" value="{{$product->cart_count}}">
+                                        </span>
+
                                             <button class="log-reg-btn" onclick='AddtoCart("{{$product->id}}")' style="float: right; padding: 3px 18px;
                                             float: right;font-size: 15px;"> <i class="fa fa-shopping-cart"></i> Add to Cart</button>
-                                        </span>
                                        
                                     </li>
                                 </ul>
@@ -91,6 +95,7 @@
                                 }
                                 else
                                 {   
+                                    document.getElementById("item_qty_span").style.visibility = "visible";
                                     
                                     document.getElementById("cart_item_qty").value = data['data']['product_count'];
                                     

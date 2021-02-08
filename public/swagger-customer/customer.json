@@ -25,6 +25,14 @@
       "description": "Everything about Customer Home Screen",
     },
     {
+      "name": "Cart",
+      "description": "Everything about Customer Cart Screen",
+    },
+    {
+      "name": "Order",
+      "description": "Everything about Customer Order/Checkout Screen",
+    },
+    {
       "name": "Test",
       "description": "Everything about Test Methods and Development",
     },
@@ -99,6 +107,41 @@
       }
     },
 
+    "/get_profile": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Customer Profile Info",
+        "description": "",
+        "operationId": "ProfileInfo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+
+
+
+
 
     "/get_products": {
       "get": {
@@ -130,7 +173,6 @@
         }
       }
     },
-
 
     "/search_products": {
       "post": {
@@ -225,6 +267,464 @@
         }
       }
     },
+
+    "/mark_product_favorite": {
+      "post": {
+        "tags": [
+          "Home"
+        ],
+        "summary": "Product Mark Favorite",
+        "description": "",
+        "operationId": "MarkFavorite",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "type": "object",
+                        "properties": {
+                          "product_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                         
+                        }
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+    "/get_favorite_products": {
+      "post": {
+        "tags": [
+          "Home"
+        ],
+        "summary": "Product Favorite",
+        "description": "",
+        "operationId": "ProductFavorite",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "type": "object",
+                        "properties": {
+                          "cart_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                         
+                        }
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+
+
+
+
+
+
+    "/get_cart": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Cart Details",
+        "description": "",
+        "operationId": "CartDetails",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "type": "object",
+                        "properties": {
+                          "cart_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                         
+                        }
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+    "/add_to_cart": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Add into Cart",
+        "description": "",
+        "operationId": "AddCart",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "type": "object",
+                        "properties": {
+                          "cart_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                                  "product_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                         
+                        }
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+    "/change_cart_item_quantity": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Change Cart Item Quantity",
+        "description": "",
+        "operationId": "ChangeCartItemQty",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "type": "object",
+                        "properties": {
+                          "cart_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                          "product_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+
+                          "quantity": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                         
+                        }
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+    "/delete_cart_item": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Delete Cart Item",
+        "description": "",
+        "operationId": "DeleteCartItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "type": "object",
+                        "properties": {
+                          "cart_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                          "product_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                         
+                        }
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+
+
+
+
+
+
+
+    "/checkout": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Checkout Details",
+        "description": "",
+        "operationId": "CheckoutDetails",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "type": "object",
+                        "properties": {
+                          "cart_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                         
+                        }
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+    "/place_order": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Place Order",
+        "description": "",
+        "operationId": "PlaceOrder",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "$ref": "#/definitions/PlaceOrderModel"
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+    "/get_order_details": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Order Details",
+        "description": "",
+        "operationId": "OrderDetails",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+       "parameters": [
+         {
+            "in": "header",
+            "name": "x-api-key",
+            "description": "token used for user authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "type": "object",
+                        "properties": {
+                          "order_id": {
+                                          "type": "int",
+                                          "example": 1,
+                                          "required": true
+                                  },
+                         
+                        }
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+
+
+
+
+
+
+
+
 
 
 
@@ -331,6 +831,37 @@
           "example": "cwzIAL7hGCE:APA91bFmCeeENFvVZfpkZZd5acSz7wm15bNeDCjM1K0Q5zoPLaUYezToX6RMZqyiVhniLXg0TexFKrKs_39IrfVS1lQbvLAlv7fM7JzWBbtYx266m7gjyL3QdwTl_6s7PMemfeEmBQ34",
           "required": true
         }
+      }
+    },
+
+    "PlaceOrderModel": {
+      "type": "object",
+      "properties": {
+         "cart_id": {
+          "type": "int",
+          "example": 1,
+          "required": true
+        },
+        "name": {
+          "type": "string",
+          "example": "Abcd",
+          "required": true
+        },
+        "address": {
+          "type": "string",
+          "example": "Islamabad",
+          "required": true
+        },
+        "phone": {
+          "type": "string",
+          "example": "+923001234567",
+          "required": 
+        },
+        "payment": {
+          "type": "int",
+          "example": 1,
+          "required": true
+        },
       }
     },
 
