@@ -52,7 +52,7 @@ class OrderController extends Controller
                         );
 
           $shipping_discount =GeneralSetting::select(['shipping_fee','discount'])->first();
-          $payment_method =PaymentMethod::select(['name'])->where('is_show',1)->get();
+          $payment_method =PaymentMethod::select(['id','name'])->where('is_show',1)->get();
 
 
           $cart_info = Cart::select(['total_price','total_item'])->where('id',$cart_id)->first();

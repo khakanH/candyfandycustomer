@@ -60,7 +60,7 @@ class CartController extends Controller
             {
               $key['product_name']  = $get_prod->name;
               $key['product_price'] = $get_prod->sale_price;
-              $key['product_image'] = $get_prod->image;
+              $key['product_image'] = config('app.img_url').$get_prod->image;
               $key['product_subtotal'] = $get_prod->sale_price*$key['product_quantity'];
             }
             else
@@ -202,8 +202,8 @@ class CartController extends Controller
           
           
 
-          $product_count    = CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first()->product_quantity;
-          $total_item_count = Cart::where('id',$cart_id)->first()->total_item;
+          $product_count    = (int)CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first()->product_quantity;
+          $total_item_count = (int)Cart::where('id',$cart_id)->first()->total_item;
 
 
          return response()->json(array("status"=>"1","msg"=>"Item Added.","result"=>array("product_count"=>$product_count,"total_item_count"=>$total_item_count,'cart_id'=>$new_cart_id)));
@@ -272,13 +272,13 @@ class CartController extends Controller
 
 
            $result = array(
-                            "product_quantity"=>$qty,
-                            "product_subtotal"=>$get_prod->sale_price*$qty,
-                            "shipping_fee"    =>$shipping_discount->shipping_fee,
-                            "discount"        =>$shipping_discount->discount,
-                            "subtotal"        =>$cart_total_price,
-                            'items'           =>$check_cart->total_item,
-                            'grand_total'     =>$all_total
+                            "product_quantity"=> $qty,
+                            "product_subtotal"=> $get_prod->sale_price*$qty,
+                            "shipping_fee"    => $shipping_discount->shipping_fee,
+                            "discount"        => $shipping_discount->discount,
+                            "subtotal"        => $cart_total_price,
+                            'items'           => $check_cart->total_item,
+                            'grand_total'     => $all_total
                     );
 
           return response()->json(array("status"=>"1","msg"=>"Item Quantity Updated","result"=>$result));

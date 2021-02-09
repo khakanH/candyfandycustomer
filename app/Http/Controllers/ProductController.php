@@ -67,19 +67,19 @@ class ProductController extends Controller
 
             foreach ($featured_product as $key) 
             {
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (int)(CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
             foreach ($best_selling_products as $key) 
             {
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (int)(CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
             foreach ($all_product as $key) 
             {
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (int)(CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
@@ -172,19 +172,19 @@ class ProductController extends Controller
 
             foreach ($featured_product as $key) 
             {
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (int)(CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
             foreach ($best_selling_products as $key) 
             {
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (int)(CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
             foreach ($all_product as $key) 
             {
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (int)(CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
@@ -215,7 +215,7 @@ class ProductController extends Controller
                                   ->first();
 
                                   
-            $product['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first()->product_quantity;
+            $product['cart_count'] = (int)(CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first()->product_quantity;
              $product['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$prod_id)->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$prod_id)->first()->id;
 
 
@@ -299,7 +299,7 @@ class ProductController extends Controller
 
             foreach ($fav_product as $key) 
             {
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (int)(CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 

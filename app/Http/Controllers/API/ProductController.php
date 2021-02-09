@@ -78,7 +78,7 @@ class ProductController extends Controller
             {
               $key['description'] = (string)$key['description'];
               $key['image'] = config('app.img_url').$key['image'];
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:(int)CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
@@ -87,7 +87,7 @@ class ProductController extends Controller
               $key['description'] = (string)$key['description'];
               $key['image'] = config('app.img_url').$key['image'];
 
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:(int)CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
@@ -95,7 +95,7 @@ class ProductController extends Controller
             {
               $key['description'] = (string)$key['description'];
               $key['image'] = config('app.img_url').$key['image'];
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:(int)CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
             }
 
@@ -150,7 +150,7 @@ class ProductController extends Controller
 
               $key['description'] = (string)$key['description'];
               $key['image'] = config('app.img_url').$key['image'];
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:(int)CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
 
             }
@@ -200,7 +200,7 @@ class ProductController extends Controller
             
             $product['description'] = (string)$product['description'];
             $product['image'] = config('app.img_url').$product['image'];
-            $product['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first()->product_quantity;
+            $product['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first() == "")?0:(int)CartDetail::where('cart_id',$cart_id)->where('product_id',$prod_id)->first()->product_quantity;
              $product['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$prod_id)->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$prod_id)->first()->id;
 
 
@@ -282,7 +282,7 @@ class ProductController extends Controller
             {
               $key['description'] = (string)$key['description'];
               $key['image'] = config('app.img_url').$key['image'];
-              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
+              $key['cart_count'] = (CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first() == "")?0:(int)CartDetail::where('cart_id',$cart_id)->where('product_id',$key['id'])->first()->product_quantity;
                $key['favorite_id'] = (FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first() =="")?0:FavoriteProduct::where('customer_id',$customer_id)->where('product_id',$key['id'])->first()->id;
               
             }

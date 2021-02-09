@@ -160,7 +160,7 @@
                                         <div class="card mb-2">
                                             <center><img style="cursor: pointer;" onclick='GetProductDetails("{{$key['id']}}")'  class="card-img-top"
                                             src="{{config('app.img_url')}}{{$key['image']}}" alt="Card image cap" ></center>
-                                            <div class="card-body">
+                                            <div class="card-body ">
                                                  <a href="{{route('product-detail',[$key['id']])}}">
                                                 <p class="card-text">{{$key['name']}}</p>
                                                 <h4 class="card-title"><b>{{$key['sale_price']}}/- PKR</b>
@@ -177,7 +177,7 @@
                                                      display: none; 
                                                     <?php endif ?>
                                                     
-                                                    width: 60px; background: #e6e7e9; border: solid darkgray 1px; padding: 4px; height: 100%;">
+                                                    width: 60px; background: #e6e7e9; border: solid darkgray 1px; padding: 4px; height: 21px; text-align: center;">
                                                     <a href="javascript:void(0)" onclick='MarkItemFavorite("{{$key['id']}}")' style=" 
                                                         <?php if (!empty($key['favorite_id'])): ?>
                                                             color: red;
@@ -289,7 +289,7 @@
                                                      display: none; 
                                                     <?php endif ?>
                                                     
-                                                    width: 60px; background: #e6e7e9; border: solid darkgray 1px; padding: 4px; height: 100%;">
+                                                    width: 60px; background: #e6e7e9; border: solid darkgray 1px; padding: 4px; height: 21px; text-align: center;">
                                                     <a href="javascript:void(0)" onclick='MarkItemFavorite("{{$key['id']}}")' style=" 
                                                         <?php if (!empty($key['favorite_id'])): ?>
                                                             color: red;
