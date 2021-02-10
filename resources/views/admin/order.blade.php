@@ -293,11 +293,18 @@
             url: "{{ config('app.url')}}admin/accept-order/"+id,
             beforeSend: function(){
             
-                  document.getElementById('Order'+id).style.display="none";
                   
             },
             success: function(data) {
-                
+                    
+                  if (data['status'] == "0") 
+                  {
+                    alert(data['msg']);
+                  }
+                  else
+                  {
+                    document.getElementById('Order'+id).style.display="none";
+                  }
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert('Exception:' + errorThrown);

@@ -34,6 +34,9 @@ use App\Models\Modules;
 |
 */
 
+Route::get('/curl', function() {
+  echo curl_init();
+});
 
 Route::get('/clear-cache', function() {
    \Artisan::call('cache:clear');

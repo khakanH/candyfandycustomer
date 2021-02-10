@@ -730,6 +730,86 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"/test_notification": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "summary": "Test Notification",
+        "description": "",
+        "operationId": "TestNotifi",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+                        "type": "object",
+                        "properties": {
+                          "player_id": {
+                                          "type": "string",
+                                          "example": "563552c0-519d-483e-9fa3-3cbef48f1471",
+                                          "required": true
+                                  },
+                         
+                        }
+                      }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+
+
+
+
+
+
+
+
+
+
+
   },
 
 
