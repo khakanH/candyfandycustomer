@@ -22,7 +22,6 @@
     <script src="{{asset('assets/extra-libs/c3/c3.min.js')}}"></script>
     <script src="{{asset('assets/libs/raphael/raphael.min.js')}}"></script>
     <script src="{{asset('assets/libs/morris.js/morris.min.js')}}"></script>
-    <script src="{{asset('dist/js/pages/dashboards/dashboard1.js')}}"></script>
     <script src="{{asset('assets/libs/moment/min/moment.min.js')}}"></script>
     <script src="{{asset('assets/libs/fullcalendar/dist/fullcalendar.min.js')}}"></script>
     <script src="{{asset('dist/js/pages/calendar/cal-init.js')}}"></script>
