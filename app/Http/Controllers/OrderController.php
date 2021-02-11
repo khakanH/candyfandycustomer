@@ -64,6 +64,17 @@ class OrderController extends Controller
               return redirect()->route('product_list')->with('failed','Kindly add something into cart.');
             }     
           }
+          elseif ($cart_info->total_item == 0) 
+          {
+            if($request->ajax()) 
+            {
+              return response()->json(['status'=>"0",'msg' => 'No Cart Found'],401);
+            }
+            else
+            {
+              return redirect()->route('product_list')->with('failed','Kindly add something into cart.');
+            }   
+          }
 
           $cart_info->all_total = $cart_info->total_price + $shipping_discount->shipping_fee -($cart_info->total_price * ($shipping_discount->discount/100));
 
@@ -112,7 +123,17 @@ class OrderController extends Controller
               return redirect()->route('product_list')->with('failed','Kindly add something into cart.');
             }     
           }
-
+          elseif ($cart_info->total_item == 0) 
+          {
+            if($request->ajax()) 
+            {
+              return response()->json(['status'=>"0",'msg' => 'No Cart Found'],401);
+            }
+            else
+            {
+              return redirect()->route('product_list')->with('failed','Kindly add something into cart.');
+            }   
+          }
 
 
           $validator = \Validator::make($request->all(), [

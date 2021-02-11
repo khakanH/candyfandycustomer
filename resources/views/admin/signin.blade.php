@@ -51,7 +51,9 @@
             <div class="auth-box">
                 <div id="loginform">
                     <div class="logo">
-                        <span class="db"><img src="{{config('app.img_url')}}logos/logo-icon.png" alt="logo" /></span>
+                        <span class="db"><img src="{{config('app.img_url')}}favicon.png" width="60" height="60" alt="logo" /></span>
+                        <br>
+                        <br>
                         <h5 class="font-medium mb-3">Sign In to Admin</h5>
                     </div>
 

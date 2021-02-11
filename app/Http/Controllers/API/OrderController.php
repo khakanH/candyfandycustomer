@@ -59,7 +59,11 @@ class OrderController extends Controller
 
           if ($cart_info == "") 
           {
-          return response()->json(array("status"=>"0","msg"=>"Kindly add something into cart before checkout."), 200);
+            return response()->json(array("status"=>"0","msg"=>"Kindly add something into cart before checkout."), 200);
+          }
+          elseif ($cart_info->total_item == 0) 
+          {
+             return response()->json(array("status"=>"0","msg"=>"Kindly add something into cart before checkout."), 200);
           }
 
           $cart_info->subtotal = $cart_info->total_price + $shipping_discount->shipping_fee -($cart_info->total_price * ($shipping_discount->discount/100));
@@ -117,7 +121,10 @@ class OrderController extends Controller
             return response()->json(array("status"=>"0","msg"=>"Kindly add something into cart before checkout."), 200);
 
           }
-
+          elseif ($cart_info->total_item == 0) 
+          {
+             return response()->json(array("status"=>"0","msg"=>"Kindly add something into cart before checkout."), 200);
+          }
 
 
 
