@@ -29890,7 +29890,7 @@ a.text-inverse:hover {
 #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin2] .sidebar-nav ul .sidebar-item.selected>.sidebar-link,
 #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin2] ul .sidebar-nav ul .sidebar-item.selected>.sidebar-link {
 	opacity: 1;
-	background-color: #2f323e;
+	background-color: #32bea6;
 	font-weight: 500
 }
 
@@ -29906,7 +29906,7 @@ a.text-inverse:hover {
 #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin3] .sidebar-nav ul .sidebar-item.selected>.sidebar-link,
 #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin3] ul .sidebar-nav ul .sidebar-item.selected>.sidebar-link {
 	opacity: 1;
-	background-color: #2f323e;
+	background-color: #32bea6;
 	font-weight: 500
 }
 
@@ -29922,7 +29922,7 @@ a.text-inverse:hover {
 #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin4] .sidebar-nav ul .sidebar-item.selected>.sidebar-link,
 #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin4] ul .sidebar-nav ul .sidebar-item.selected>.sidebar-link {
 	opacity: 1;
-	background-color: #2f323e;
+	background-color: #32bea6;
 	font-weight: 500
 }
 
@@ -30992,7 +30992,7 @@ body[data-theme=dark] .manage-table tr.advanced-table {
 
 .sidebar-nav ul .sidebar-item.selected>.sidebar-link {
 	opacity: 1;
-	background-color: #ff5050;
+	background-color: #32bea6;
 	border-left: 3px solid transparent;
 	font-weight: 500
 }
@@ -38498,7 +38498,7 @@ body .jqstooltip {
 #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin6] ul .sidebar-nav ul .sidebar-item.selected>.sidebar-link {
 	border-left: 0;
 	opacity: 1;
-	background-color: #2cabe3;
+	background-color: #32bea6;
 	font-weight: 500
 }
 

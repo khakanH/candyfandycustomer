@@ -170,7 +170,7 @@ Route::get('delete-product/{id}',[AdminInventoryController::class, 'DeleteProduc
 
 
 
-Route::get('order',[AdminOrderController::class, 'Index'])->name('order');
+Route::get('order/{type}',[AdminOrderController::class, 'Index'])->name('order');
 Route::get('get-new-order',[AdminOrderController::class, 'NewOrders'])->name('get-new-order');
 Route::get('accept-order/{id}',[AdminOrderController::class, 'AcceptOrder'])->name('accept-order');
 Route::get('reject-order/{id}',[AdminOrderController::class, 'RejectOrder'])->name('reject-order');

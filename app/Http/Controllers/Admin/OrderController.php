@@ -28,7 +28,7 @@ class OrderController extends Controller
 
 
 
-    public function Index(Request $request)
+    public function Index(Request $request,$type)
     {	
       try 
         {
@@ -36,7 +36,23 @@ class OrderController extends Controller
 
             $user_info = $this->checkUserAvailbility($user_id,$request);
 
-            $orders = Orders::where('order_status',1)->orderBy('created_at','asc')->get();
+            if ($type == 1) 
+            {
+              $orders = Orders::where('order_status',1)->orderBy('created_at','asc')->get();
+            }
+            elseif ($type == 2) 
+            {
+              $orders = Orders::where('order_status',2)->orderBy('created_at','asc')->get();
+            }
+            elseif ($type == 4) 
+            {
+              $orders = Orders::where('order_status',4)->orderBy('completed_time','desc')->get();
+            }
+            elseif ($type == 5) 
+            {
+              $orders = Orders::where('order_status',5)->orderBy('created_at','asc')->get();
+            }
+
 
             // foreach ($orders as $key)
             // {
@@ -46,7 +62,7 @@ class OrderController extends Controller
             //     }
             // }
             // exit();
-            return view('admin.order',compact('orders'));
+            return view('admin.order',compact('orders','type'));
         } 
         catch (Exception $e) 
         {
@@ -788,7 +804,7 @@ class OrderController extends Controller
             if(count($orders) == 0):
             ?>
             <br>
-              <center><h6>No Rejected Order Found!</h6></center>
+              <center><h6>No Completed Order Found!</h6></center>
             <br>
             <?php 
             else:

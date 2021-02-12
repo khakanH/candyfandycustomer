@@ -36,35 +36,26 @@
                                   
 
                                 <ul class="nav nav-pills mt-4 mb-1">
-                                    <li class=" nav-item"> <a href="#navpills-1" class="nav-link active" data-toggle="tab" aria-expanded="false">New Orders</a> </li>
-                                    <li class="nav-item"> <a href="#navpills-2" class="nav-link" data-toggle="tab" aria-expanded="false" onclick="GetAcceptedOrder()">Accepted Orders</a> </li>
-                                    <li class="nav-item"> <a href="#navpills-3" class="nav-link" data-toggle="tab" aria-expanded="true" onclick="GetCompletedOrder()">Completed Orders</a> </li>
-                                     <li class="nav-item"> <a href="#navpills-4" class="nav-link" data-toggle="tab" aria-expanded="true" onclick="GetRejectedOrder()">Rejected Orders</a> </li>
+                                    <li class=" nav-item"> <a href="#navpills-1" class="nav-link <?php if ($type == 1): ?>
+                                        active
+                                    <?php endif ?>" data-toggle="tab" aria-expanded="false" onclick="RefreshOrderList()">New Orders</a> </li>
+                                    <li class="nav-item"> <a href="#navpills-2" class="nav-link <?php if ($type == 2): ?>
+                                        active
+                                    <?php endif ?>" data-toggle="tab" aria-expanded="false" onclick="GetAcceptedOrder()">Accepted Orders</a> </li>
+                                    <li class="nav-item"> <a href="#navpills-3" class="nav-link <?php if ($type == 4): ?>
+                                        active
+                                    <?php endif ?>" data-toggle="tab" aria-expanded="true" onclick="GetCompletedOrder()">Completed Orders</a> </li>
+                                     <li class="nav-item"> <a href="#navpills-4" class="nav-link <?php if ($type == 5): ?>
+                                        active
+                                    <?php endif ?>" data-toggle="tab" aria-expanded="true" onclick="GetRejectedOrder()">Rejected Orders</a> </li>
                                 </ul>
                                 <div class="tab-content border p-4" style="min-height: 320px;">
-                                    <div id="navpills-1" class="tab-pane active">
+                                    
+
+
+
+    <div id="navpills-1" class="tab-pane <?php if ($type == 1): ?> active <?php endif ?>">
                                         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
               <div class="row">
                 <div class="col-lg-12">
@@ -193,59 +184,421 @@
 
               </div>
 
+        
+
+        </div>
+
+
+
+                                    <div id="navpills-2" class="tab-pane <?php if ($type == 2): ?>
+                                      active
+                                    <?php endif ?>">
+                                          
+
+                                        @if(count($orders) == 0)
+            <br>
+              <center><h6>No Accepted Order Found!</h6></center>
+            <br>
+@else
+            ?>
+                <div id="accordion" class="accordion">
+            @foreach($orders as $key)
+             <div class="col-lg-12">
+              <div class="card bd-0 border" id="Order<?php echo $key['id'] ?>">
+                
+
+                <div class="card-header text-white bg-dark" id="heading<?php echo $key['id'] ?>">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<?php echo $key['id'] ?>" aria-expanded="true" aria-controls="collapse<?php echo $key['id'] ?>">Order Number: <?php echo $key['order_number'] ?></button>
+                
+                 <button class="btn btn-info"  style="float: right; margin-right:10px; height: 40px; padding: 10px;" onclick='CompleteOrder("<?php echo $key['id'] ?>")'> Complete Order</button >
+               
+                </div>
 
 
 
 
+                <div id="collapse<?php echo $key['id'] ?>" class="collapse" aria-labelledby="heading<?php echo $key['id'] ?>" data-parent="#accordion">
+
+                  <div class="card-body">
 
 
+                    <div class="row">
+                      <div class="col-md">
+                        <label class="tx-uppercase tx-13 tx-bold">Customer Information</label>
+                                   <p class="justify-content-between">
+                          <span>Customer Name: </span>
+                          <span><?php echo $key['customer_name'] ?></span>
+                        </p>
+                        <p class="justify-content-between">
+                          <span>Customer Phone: </span>
+                          <span><?php echo $key['customer_phone'] ?></span>
+                        </p>
+                        
+                        <p class="justify-content-between">
+                          <span>Delivery Address:</span>
+                          <span><?php echo $key['delivery_address'] ?></span>
+                        </p>     
+                       
+                      </div><!-- col -->
+                      
+                      <div class="col-md">
+                        <label class="tx-uppercase tx-13 tx-bold mg-b-20">Order Information</label>
+                        <p class="d-flex justify-content-between">
+                          <span>Order Number: </span>
+                          <span><?php echo $key['order_number'] ?></span>
+                        </p>
+                        <p class="d-flex justify-content-between">
+                          <span>Order Time: </span>
+                          <span><?php echo date('M d,Y h:i a',strtotime($key['created_at'])) ?></span>
+                        </p>
+                        
+                        <p class="d-flex justify-content-between">
+                          <span>Payment Method</span>
+                          <span><?php echo $key->payment_method_name['name'] ?></span>
+                        </p>
+                        <p class="d-flex justify-content-between">
+                          <span></span>
+                          <?php if($key['is_paid'] == 1): ?>
+                          <span class="fa fa-check-circle tx-20 text-success"> Paid</span>
+                          <?php else: ?>
+                          <span class="fa fa-times-circle tx-20 text-danger"> Unpaid</span>
+                          <?php endif; ?>
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                   <div class="table-responsive">
+                    <table class="table">
+                      <thead style="text-align: center;">
+                        <tr>
+                            <th class="wd-20p"style="text-align: left;" >Product</th>
+                            <!-- <th class="wd-10p">Price</th> -->
+                            <!-- <th class="wd-10p">Quantity</th> -->
+                            <th class="wd-10p">SubTotal</th>
+                        </tr>
+                    </thead>
+                    <tbody style="vertical-align: middle; text-align: center;">
+                    
+                    @foreach($key->order_details as $key_):
+                    <tr>
+                        <td style="vertical-align: middle; text-align: left; padding-left: 30px;"><sub class="tx-teal" style="font-size: 13px;"><?php echo $key_['quantity'] ?>x</sub> 
+                           &nbsp;<?php echo $key_['product_name'] ?>
+                          <br>
+                        </td>
+                        <!-- <td style="vertical-align: middle;"><?php echo $key_['restaurant_product_price'] ?></td> -->
+                        <!-- <td style="vertical-align: middle;"><?php echo $key_['quantity'] ?></td> -->
+                        <td style="vertical-align: middle;"><?php echo $key_['subtotal'] ?></td>
+                    </tr>
+
+                    @endforeach
+
+                    </tbody>
+                  </table>
+                </div>
 
 
+                <table id="order_calculation_summary" class="table" style="width: 50%; float: right;">
+                  <tbody>
+                    <tr><th class="tx-left">Order Amount:</th><td class="tx-center"><?php echo number_format($key['order_amount'],2) ?></td></tr>
+                    <tr><th class="tx-left">Discount:</th><td class="tx-center"><?php echo number_format($key['discount'],2) ?></td></tr>
+                    <tr><th class="tx-left">Delivery Fee:</th><td class="tx-center"><?php echo number_format($key['delivery_fee'],2) ?></td></tr>
+                    <tr><th class="tx-left">Total Bill:</th><td class="tx-center"><?php echo number_format($key['total_paid_amount'],2) ?></td></tr>
+                  </tbody>
+                </table>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                </div><!-- card-body -->
+              </div><!-- card -->
+            </div>
+                 <br>
+                @endforeach
+                </div>
+              
+                @endif
 
                                     </div>
-                                    <div id="navpills-2" class="tab-pane">
-                                        
-                                        
 
-                                    </div>
-                                    <div id="navpills-3" class="tab-pane">
+
+
+
+
+
+
+
+
+                                    <div id="navpills-3" class="tab-pane <?php if ($type == 4): ?>
+                                      active
+                                    <?php endif ?>">
+
+
+
+
+            <?php if(count($orders) == 0):
+            ?>
+            <br>
+              <center><h6>No Completed Order Found!</h6></center>
+            <br>
+            <?php 
+            else:
+            ?>
+                <div id="accordion" class="accordion">
+            <?php   
+            foreach($orders as $key):
+            ?>
+              
+             <div class="col-lg-12">
+              <div class="card bd-0 border" id="Order<?php echo $key['id'] ?>">
+                     
+               <div class="card-header text-white bg-dark" id="heading<?php echo $key['id'] ?>">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<?php echo $key['id'] ?>" aria-expanded="true" aria-controls="collapse<?php echo $key['id'] ?>">Order Number: <?php echo $key['order_number'] ?></button>
+                
+                
+               
+                </div>
+
+
+
+
+                <div id="collapse<?php echo $key['id'] ?>" class="collapse" aria-labelledby="heading<?php echo $key['id'] ?>" data-parent="#accordion">
+
+                  <div class="card-body">
+
+
+                    <div class="row">
+                      <div class="col-md">
+                        <label class="tx-uppercase tx-13 tx-bold">Customer Information</label>
+                            
+                                   <p class="justify-content-between">
+                          <span>Customer Name: </span>
+                          <span><?php echo $key['customer_name'] ?></span>
+                        </p>
+                        <p class="justify-content-between">
+                          <span>Customer Phone: </span>
+                          <span><?php echo $key['customer_phone'] ?></span>
+                        </p>
+                        
+                        <p class="justify-content-between">
+                          <span>Delivery Address:</span>
+                          <span><?php echo $key['delivery_address'] ?></span>
+                        </p>
+                      </div><!-- col -->
+                      
+                      <div class="col-md">
+                        <label class="tx-uppercase tx-13 tx-bold mg-b-20">Order Information</label>
+                        <p class="d-flex justify-content-between">
+                          <span>Order Number: </span>
+                          <span><?php echo $key['order_number'] ?></span>
+                        </p>
+                        <p class="d-flex justify-content-between">
+                          <span>Order Time: </span>
+                          <span><?php echo date('M d,Y h:i a',strtotime($key['created_at'])) ?></span>
+                        </p>
+                        
+                        <p class="d-flex justify-content-between">
+                          <span>Payment Method</span>
+                          <span><?php echo $key->payment_method_name['name'] ?></span>
+                        </p>
+                        <p class="d-flex justify-content-between">
+                          <span></span>
+                          <?php if($key['is_paid'] == 1): ?>
+                          <span class="fa fa-check-circle tx-20 text-success"> Paid</span>
+                          <?php else: ?>
+                          <span class="fa fa-times-circle tx-20 text-danger"> Unpaid</span>
+                          <?php endif; ?>
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                   <div class="table-responsive">
+                    <table class="table">
+                      <thead style="text-align: center;">
+                        <tr>
+                            <th class="wd-20p"style="text-align: left;" >Product</th>
+                            <!-- <th class="wd-10p">Price</th> -->
+                            <!-- <th class="wd-10p">Quantity</th> -->
+                            <th class="wd-10p">SubTotal</th>
+                        </tr>
+                    </thead>
+                    <tbody style="vertical-align: middle; text-align: center;">
+                    
+                     <?php foreach($key->order_details as $key_): ?>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: left; padding-left: 30px;"><sub class="tx-teal" style="font-size: 13px;"><?php echo $key_['quantity'] ?>x</sub> 
+                           &nbsp;<?php echo $key_['product_name'] ?>
+                          <br>
+                        </td>
+                        <!-- <td style="vertical-align: middle;"><?php echo $key_['restaurant_product_price'] ?></td> -->
+                        <!-- <td style="vertical-align: middle;"><?php echo $key_['quantity'] ?></td> -->
+                        <td style="vertical-align: middle;"><?php echo $key_['subtotal'] ?></td>
+                    </tr>
+
+                    <?php endforeach;?>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <table id="order_calculation_summary" class="table" style="width: 50%; float: right;">
+                  <tbody>
+                    <tr><th class="tx-left">Order Amount:</th><td class="tx-center"><?php echo number_format($key['order_amount'],2) ?></td></tr>
+                    <tr><th class="tx-left">Discount:</th><td class="tx-center"><?php echo number_format($key['discount'],2) ?></td></tr>
+                    <tr><th class="tx-left">Delivery Fee:</th><td class="tx-center"><?php echo number_format($key['delivery_fee'],2) ?></td></tr>
+                    <tr><th class="tx-left">Total Bill:</th><td class="tx-center"><?php echo number_format($key['total_paid_amount'],2) ?></td></tr>
+                  </tbody>
+                </table>
+
+
+                </div><!-- card-body -->
+              </div><!-- card -->
+            </div>
+                 <br>
+              <?php
+                endforeach;
+                ?>
+                </div>
+                <?php   
+                endif;?>
+
+
+
+
+
+
+
+
+
+
+
                                         
                                     </div>
-                                    <div id="navpills-4" class="tab-pane">
+                                    <div id="navpills-4" class="tab-pane <?php if ($type == 5): ?>
+                                      active
+                                    <?php endif ?>">
+
+                                       @if(count($orders) == 0)
+            <br>
+              <center><h6>No Rejected Order Found!</h6></center>
+            <br>
+            @else
+                <div id="accordion" class="accordion">
+            @foreach($orders as $key)
+              
+             <div class="col-lg-12">
+              <div class="card bd-0 border" id="Order<?php echo $key['id'] ?>">
+
+
+               <div class="card-header text-white bg-dark" id="heading<?php echo $key['id'] ?>">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<?php echo $key['id'] ?>" aria-expanded="true" aria-controls="collapse<?php echo $key['id'] ?>">Order Number: <?php echo $key['order_number'] ?></button>
+                
+                
+               
+                </div>
+
+
+
+
+                <div id="collapse<?php echo $key['id'] ?>" class="collapse" aria-labelledby="heading<?php echo $key['id'] ?>" data-parent="#accordion">
+
+
+                  <div class="card-body">
+
+
+                    <div class="row">
+                      <div class="col-md">
+                        <label class="tx-uppercase tx-13 tx-bold">Customer Information</label>
+                                   <p class="justify-content-between">
+                          <span>Customer Name: </span>
+                          <span><?php echo $key['customer_name'] ?></span>
+                        </p>
+                        <p class="justify-content-between">
+                          <span>Customer Phone: </span>
+                          <span><?php echo $key['customer_phone'] ?></span>
+                        </p>
+                        
+                        <p class="justify-content-between">
+                          <span>Delivery Address:</span>
+                          <span><?php echo $key['delivery_address'] ?></span>
+                        </p>     
+                       
+                      </div><!-- col -->
+                      
+                      <div class="col-md">
+                        <label class="tx-uppercase tx-13 tx-bold mg-b-20">Order Information</label>
+                        <p class="d-flex justify-content-between">
+                          <span>Order Number: </span>
+                          <span><?php echo $key['order_number'] ?></span>
+                        </p>
+                        <p class="d-flex justify-content-between">
+                          <span>Order Time: </span>
+                          <span><?php echo date('M d,Y h:i a',strtotime($key['created_at'])) ?></span>
+                        </p>
+                        
+                        <p class="d-flex justify-content-between">
+                          <span>Payment Method</span>
+                          <span><?php echo $key->payment_method_name['name'] ?></span>
+                        </p>
+                        <p class="d-flex justify-content-between">
+                          <span></span>
+                          <?php if($key['is_paid'] == 1): ?>
+                          <span class="fa fa-check-circle tx-20 text-success"> Paid</span>
+                          <?php else: ?>
+                          <span class="fa fa-times-circle tx-20 text-danger"> Unpaid</span>
+                          <?php endif; ?>
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                   <div class="table-responsive">
+                    <table class="table">
+                      <thead style="text-align: center;">
+                        <tr>
+                            <th class="wd-20p"style="text-align: left;" >Product</th>
+                            <!-- <th class="wd-10p">Price</th> -->
+                            <!-- <th class="wd-10p">Quantity</th> -->
+                            <th class="wd-10p">SubTotal</th>
+                        </tr>
+                    </thead>
+                    <tbody style="vertical-align: middle; text-align: center;">
+                    
+                     @foreach($key->order_details as $key_)
+                    <tr>
+                        <td style="vertical-align: middle; text-align: left; padding-left: 30px;"><sub class="tx-teal" style="font-size: 13px;"><?php echo $key_['quantity'] ?>x</sub> 
+                           &nbsp;<?php echo $key_['product_name'] ?>
+                          <br>
+                        </td>
+                        <!-- <td style="vertical-align: middle;"><?php echo $key_['restaurant_product_price'] ?></td> -->
+                        <!-- <td style="vertical-align: middle;"><?php echo $key_['quantity'] ?></td> -->
+                        <td style="vertical-align: middle;"><?php echo $key_['subtotal'] ?></td>
+                    </tr>
+
+                    @endforeach
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <table id="order_calculation_summary" class="table" style="width: 50%; float: right;">
+                  <tbody>
+                    <tr><th class="tx-left">Order Amount:</th><td class="tx-center"><?php echo number_format($key['order_amount'],2) ?></td></tr>
+                    <tr><th class="tx-left">Discount:</th><td class="tx-center"><?php echo number_format($key['discount'],2) ?></td></tr>
+                    <tr><th class="tx-left">Delivery Fee:</th><td class="tx-center"><?php echo number_format($key['delivery_fee'],2) ?></td></tr>
+                    <tr><th class="tx-left">Total Bill:</th><td class="tx-center"><?php echo number_format($key['total_paid_amount'],2) ?></td></tr>
+                  </tbody>
+                </table>
+
+
+                </div><!-- card-body -->
+              </div><!-- card -->
+            </div>
+                 <br>
+                @endforeach
+                </div>
+                @endif
                                         
                                     </div>
                                 </div>
@@ -263,6 +616,10 @@
     
 <script type="text/javascript">
   
+
+ 
+
+
     function RefreshOrderList()
     {
 

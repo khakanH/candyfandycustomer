@@ -18,10 +18,19 @@ class MenuHelper{
 
  		foreach ($get_module as $key) 
  		{
+      if ($key['route'] == 'order') 
+      {
+        $key['route'] = route("order",['1']);
+        
+      }
+      else
+      {
+        $key['route'] = route($key['route']);
+      }
  			?>
  			  
-       <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark" href="<?php echo route($key['route']) ?>" aria-expanded="false">
+       <li class="sidebar-item ">
+                            <a class="sidebar-link waves-effect waves-dark" href="<?php echo $key['route'] ?>" aria-expanded="false">
                                 <i class="<?php echo $key['icon'] ?>"></i>
                                 <span class="hide-menu"><?php echo $key['name']; ?></span> 
                             </a>
