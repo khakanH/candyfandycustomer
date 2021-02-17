@@ -41,16 +41,19 @@ class ProductController extends Controller
 
             $all_product = Product::where('stock','>',0)
                                   ->where('is_show',1)
+                                  ->limit(50)
                                   ->get();
 
             $featured_product  = Product::where('is_featured',1)
                                         ->where('stock','>',0)
                                         ->where('is_show',1)
+                                        ->limit(20)
                                         ->get();
 
             $product_ids = OrderDetails::select('product_id', DB::raw('COUNT(id) as count'))
                                        ->groupBy('product_id')
                                        ->orderBy(DB::raw('COUNT(id)'), 'DESC')
+                                        ->limit(20)
                                        ->pluck('product_id');
 
             $best_selling_products = array();
@@ -113,6 +116,7 @@ class ProductController extends Controller
               {
                 $all_product = Product::where('stock','>',0)
                                   ->where('is_show',1)
+                                  ->limit(50)
                                   ->get();
               }
               else
@@ -120,6 +124,7 @@ class ProductController extends Controller
                    $all_product = Product::where('stock','>',0)
                                   ->where('is_show',1)
                                   ->where('name','like','%'.$search.'%')
+                                  ->limit(50)
                                   ->get();
               }
             }
@@ -130,6 +135,7 @@ class ProductController extends Controller
                 $all_product = Product::where('stock','>',0)
                                   ->where('is_show',1)
                                   ->where('category_id',$selected_cate_id)
+                                  ->limit(50)
                                   ->get();
               }
               else
@@ -138,6 +144,7 @@ class ProductController extends Controller
                                   ->where('is_show',1)
                                   ->where('name','like','%'.$search.'%')
                                   ->where('category_id',$selected_cate_id)
+                                  ->limit(50)
                                   ->get();
               }
             }
@@ -151,11 +158,13 @@ class ProductController extends Controller
             $featured_product  = Product::where('is_featured',1)
                                         ->where('stock','>',0)
                                         ->where('is_show',1)
+                                        ->limit(20)
                                         ->get();
 
             $product_ids = OrderDetails::select('product_id', DB::raw('COUNT(id) as count'))
                                        ->groupBy('product_id')
                                        ->orderBy(DB::raw('COUNT(id)'), 'DESC')
+                                       ->limit(20)
                                        ->pluck('product_id');
 
             $best_selling_products = array();

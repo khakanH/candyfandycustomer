@@ -1,5 +1,5 @@
     <!-- Custom CSS -->
-     <link href="{{asset('dist/css/admin_style.min.css')}}" rel="stylesheet">
+     <link href="{{asset('dist/css/admin_style.min.css?'.time())}}" rel="stylesheet">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
     <!-- This Page CSS -->

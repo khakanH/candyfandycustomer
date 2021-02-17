@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon icon -->
-    <title>Kotler | Admin</title>
+    <title>Candy Fandy | Admin</title>
     <!-- Custom CSS -->
     <link href="{{asset('dist/css/admin_style.min.css')}}" rel="stylesheet">
     <style type="text/css">

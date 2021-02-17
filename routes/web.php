@@ -34,6 +34,8 @@ use App\Models\Modules;
 |
 */
 
+
+
 Route::get('/curl', function() {
   echo curl_init();
 });
@@ -47,6 +49,18 @@ Route::get('/clear-cache', function() {
 });
 
 
+
+// Route::get('/admin/MB-Script',function(){
+
+// 	$modules = Modules::get();
+// 	foreach ($modules as $key) 
+// 	{
+// 		UserRole::insert(array(
+// 				'user_type'	=> 0,
+// 				'module_id'		=> $key['id'],
+// 		));
+// 	}
+// });
 
 
 Route::get('/refresh', function(Request $request)
@@ -218,7 +232,21 @@ Route::get('payment-method',[AdminGeneralSettingController::class, 'PaymentMetho
 Route::post('add-update-payment-method',[AdminGeneralSettingController::class, 'AddUpdatePaymentMethod'])->name('add-update-payment-method');
 Route::get('change-payment-method-availability/{id}/{val}',[AdminGeneralSettingController::class, 'ChangePaymentAvailability'])->name('change-payment-method-availability');
 Route::get('get-payment-method-list-AJAX',[AdminGeneralSettingController::class, 'PaymentMethodListAJAX'])->name('get-payment-method-list-AJAX');
+
+
+
+
+
+Route::get('cancel-reason',[AdminGeneralSettingController::class, 'CancelReason'])->name('cancel-reason');
+Route::post('add-update-cancel-reason',[AdminGeneralSettingController::class, 'AddUpdateCancelReason'])->name('add-update-cancel-reason');
+Route::get('change-cancel-reason-availability/{id}/{val}',[AdminGeneralSettingController::class, 'ChangeCancelReasonAvailability'])->name('change-cancel-reason-availability');
+Route::get('get-cancel-reason-list-AJAX',[AdminGeneralSettingController::class, 'CancelReasonListAJAX'])->name('get-cancel-reason-list-AJAX');
+Route::get('delete-cancel-reason/{id}',[AdminGeneralSettingController::class, 'DeleteCancelReason'])->name('delete-cancel-reason');
+
+
 });
+
+
 
 
 });

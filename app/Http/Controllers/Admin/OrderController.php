@@ -155,7 +155,7 @@ class OrderController extends Controller
             if(Orders::where('id',$id)->update(array('order_status'=>5,'cancel_type'=>1)))
             {
               $notification_title = "Order Rejected";
-              $notification_description = "Your Candy Fandy Order has been Rejected.";
+               $notification_description = "Your Candy Fandy Order has been Rejected.\nOrder Number: ".$get_order->order_number;
 
                     // push notification to customer
                     $msg = array
@@ -207,6 +207,13 @@ class OrderController extends Controller
 
             $user_info = $this->checkUserAvailbility($user_id,$request);
 
+            $get_order = Orders::where('id',$id)->first();
+
+            if ($get_order == "") 
+            {
+                return array("status"=>"0","msg"=>"Invalid Order ID");
+            }
+
             $get_order_item = OrderDetails::where('order_id',$id)->get();
 
             foreach ($get_order_item as $key) 
@@ -216,19 +223,52 @@ class OrderController extends Controller
             }
 
 
-            $orders = Orders::where('id',$id)->update(array('order_status'=>4,'completed_time'=>date('Y-m-d H:i:s')));
+           if(Orders::where('id',$id)->update(array('order_status'=>4,'completed_time'=>date('Y-m-d H:i:s'))))
+           {
+             $notification_title = "Order Completed";
+            $notification_description = "Your Candy Fandy Order has been Completed.\nOrder Number: ".$get_order->order_number;
 
+                    // push notification to customer
+                    $msg = array
+                    (
+                        'title'     => $notification_title, 
+                        'body'      => $notification_description,
+                          
+                    );
 
+                    $fcm_data=array
+                    (
+                         'title'     => $notification_title, 
+                        'body'      => $notification_description,
+                    );
+                  
+                $get_cust_info = Customer::where('id',$get_order->customer_id)
+                                                          ->first();
+                    if ($get_cust_info->device_type == 1) 
+                    {
+                      //for andorid
+                      $this->PushNotificationAndroid($get_cust_info->device_token,$msg,$fcm_data);
+                    }
+                    // elseif ($get_cust_info->device_type == 2) 
+                    // {
+                    //   //for IOS
+                    //   $this->PushNotificationIOS($get_cust_info->device_token,$msg,$fcm_data,"customer");
+
+                    // }
+                
+                return array("status"=>"1","msg"=>"Order Completed Successfully.");
+            }
+            else
+            {
+                return array("status"=>"0","msg"=>"Something Went Wrong.");
+
+            }
         } 
         catch (Exception $e) 
         {
             return response()->json($e,500);
         }
     }
-
-
-
-
 
 
 

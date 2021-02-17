@@ -15,7 +15,7 @@ use DB;
 use File;
 
 
-use Image;
+// use Image;
 
 class InventoryController extends Controller
 {
@@ -283,7 +283,7 @@ class InventoryController extends Controller
                 if (empty($image)) 
                 {
 
-                    $path = "default_product.png";
+                    $path = "product/default_product.png";
                 
                 }
                 else

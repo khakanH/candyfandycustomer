@@ -352,6 +352,66 @@
 <!-- ----------------------------------------------------------------------------------------------------- -->
 
 
+<!-- Cancel Reason Modal                                         -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
+
+<div id="CancelReasonModal" class="modal fade show " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-modal="true" aria-hidden="true" style="color: black;">
+    <div class="modal-dialog" id="CancelReasonModalDialog">
+        <div class="modal-content" id="CancelReasonModalContent">
+           
+            <form name="reasonForm" enctype="multipart/form-data" id="reasonForm">
+              @csrf
+               <span class='arrow'>
+              <label class='error'></label>
+              </span>
+                  <div class="modal-header">
+                      <h4 class="modal-title" id="CancelReasonModalLabel"></h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="" id="CancelReasonModalData">
+
+                      <input type="hidden" id="reason_id" name="reason_id">
+
+
+                        
+                        <div class="form-group">
+                          <input type="text" id="reason_name" name="reason_name" class="form-control" placeholder="Enter Cancel Reason Name">
+                          <br>
+                          <select class="form-control" name="reason_type" id="reason_type">
+                            <option value="">Select Cancel Reason Type</option>
+                            <option value="1">Customer</option>
+                            <option value="2">Shop Keeper</option>
+                          </select>
+                        </div>
+                                
+                      </div>
+              
+
+                      </div>
+                  <div class="modal-footer" id="CancelReasonModalFooter">
+                      <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-info ">Save</button>
+
+                  </div>
+            </form>
+
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
+
+
+
+
+
+
 <script type="text/javascript">
     
     $(function() {
@@ -887,6 +947,110 @@ $(function() {
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
 
+$(function() {
+        $("form[name='reasonForm']").validate({
+             errorPlacement: function(label, element) {
+        label.addClass('arrow');
+        label.css({"color": "red", "font-size": "12px" ,"width":"100%"});
+        label.insertAfter(element);
+    },
+    wrapper: 'span',
+
+    rules: {
+      reason_name: {
+        required: true,
+      },
+      reason_type: {
+        required: true,
+      },
+    },
+    messages: {
+      reason_name: {
+        required: "Please Provide a Cancel Reason Name",
+      },
+      reason_type: {
+        required: "Please Select a Cancel Reason Type",
+      },
+     
+    },
+    submitHandler: function(form) {
+
+        let myForm = document.getElementById('reasonForm');
+        let formData = new FormData(myForm);
+
+         $.ajax({
+        type: "POST",
+        cache: false,
+        url: "{{ config('app.url')}}admin/add-update-cancel-reason",
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false,
+        contentType: false,
+        beforeSend: function(){
+                            $('#CancelReasonModal').modal('hide');
+                        },
+        success: function(data) {
+           
+
+            get_status = data['status'];
+            get_msg    = data['msg'];
+
+                            if (get_status == "0") 
+                            {
+
+                             document.getElementById('toast').style.visibility = "visible";
+                                document.getElementById('toast').className = "alert alert-danger alert-rounded fadeIn animated";
+                                document.getElementById('toastMsg').innerHTML = get_msg;
+
+
+                                 setTimeout(function() {
+                             document.getElementById('toast').style.visibility = "hidden";
+                                
+
+                            }, 5000);
+
+                            }
+                            else
+                            {
+                                document.getElementById('toast').style.visibility = "visible";
+                                document.getElementById('toast').className = "alert alert-success alert-rounded fadeIn animated";
+                                document.getElementById('toastMsg').innerHTML = get_msg;
+
+
+                                 setTimeout(function() {
+                             document.getElementById('toast').style.visibility = "hidden";
+
+                            }, 5000);
+
+
+                            }
+
+
+        $.ajax({
+        type: "GET",
+        cache: false,
+        url: "{{ config('app.url')}}admin/get-cancel-reason-list-AJAX",
+        success: function(data) {
+
+            $('#reasonTBody').html(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Exception:' + errorThrown);
+        }
+    });
+
+    }
+  });
+
+    }
+  });
+  });
+
+
+
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 
 var product_loadFile = function(event) {
     var product_image_output = document.getElementById('product_image_output');
